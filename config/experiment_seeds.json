@@ -1,0 +1,23 @@
+{
+  "description": "Frozen seed map for the paper-level analyses.",
+  "truth_variants": {
+    "seed": 42,
+    "used_by": "create_truth_variants.py / variant layer"
+  },
+  "gc_bin_ablation": {
+    "seeds": [11, 22, 33],
+    "used_by": "profile-matched GC-bin ablation"
+  },
+  "coverage_replicates": {
+    "seeds": [101, 202, 303],
+    "used_by": "coverage-replicate analysis"
+  },
+  "panel_replicates": {
+    "replicates": 2,
+    "seed_policy": "fixed per route in the frozen panel metadata"
+  },
+  "quick_demo_default": {
+    "seed": 42,
+    "used_by": "reproduce.sh --quick-demo/--quick-reproduce/--fixture-demo"
+  }
+}

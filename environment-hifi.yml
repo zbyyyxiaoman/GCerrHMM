@@ -1,4 +1,4 @@
-name: errhmm
+name: errhmm-hifi
 channels:
   - conda-forge
   - bioconda
@@ -11,8 +11,5 @@ dependencies:
   - matplotlib=3.11.2
   - minimap2=2.31
   - samtools=1.23.1
-  - bcftools=1.24
-  - flye=2.9.6
-  - bedtools
-  - seqkit
-  - pigz
+  - hifiasm=0.25.0
+  - whatshap=2.8

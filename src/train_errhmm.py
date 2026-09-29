@@ -401,6 +401,12 @@ def main():
         help='Maximum accepted reads to train on (0 = all)',
     )
     parser.add_argument(
+        '--min-reads',
+        type=int,
+        default=1,
+        help='Fail if fewer than this many accepted primary reads are observed.',
+    )
+    parser.add_argument(
         '--pseudocount',
         type=float,
         default=None,
@@ -435,6 +441,12 @@ def main():
         min_mapq=args.min_mapq,
         max_reads=args.max_reads,
     )
+    processed = int(hmm.training_metadata.get('reads_processed', 0))
+    if processed < args.min_reads:
+        raise SystemExit(
+            f"TRAINING_READ_COUNT_FAILED: accepted {processed} reads; "
+            f"minimum is {args.min_reads}"
+        )
     
     # 保存模型
     hmm.save(args.output)

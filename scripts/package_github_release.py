@@ -22,6 +22,7 @@ ROOT_FILES = [
     "REPRODUCIBILITY.md",
     "environment-tools.yml",
     "environment.yml",
+    "environment-hifi.yml",
     "reproduce.sh",
     "requirements.txt",
 ]
@@ -98,6 +99,7 @@ DOCS = [
     "gc_aware_algorithm.md",
     "gcerrhmm_main_figure_captions.md",
     "kmer_metric_audit.md",
+    "manuscript_number_map.md",
     "panel_provenance.md",
     "REVIEWER_GUIDE.md",
     "sv_evaluation_protocol.md",

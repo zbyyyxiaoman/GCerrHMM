@@ -3,6 +3,10 @@
 This guide gives the shortest reliable path through the GCerrHMM submission.
 It separates three checks that answer different questions.
 
+The primary panel is ONT. The HiFi cross-platform check and real HG002
+WhatsHap phasing check are secondary analyses; legacy `map-hifi` and Raven
+scripts are not part of the paper protocol.
+
 ## Tier 0: inspect the frozen result package
 
 No sequencing reads are needed.

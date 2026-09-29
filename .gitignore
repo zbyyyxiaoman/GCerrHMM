@@ -1,4 +1,6 @@
 data/
+!tests/fixtures/tiny_demo/data/
+!tests/fixtures/tiny_demo/data/**
 results/
 logs/
 .venv/
@@ -14,6 +16,8 @@ logs/
 *.cereal
 __pycache__/
 tmp/
+!tests/fixtures/tiny_demo/data/tmp/
+!tests/fixtures/tiny_demo/data/tmp/**
 *.log
 *.bak
 *.tmp

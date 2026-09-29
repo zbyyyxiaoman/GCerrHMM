@@ -7,6 +7,18 @@ conda env create -f environment.yml
 conda activate errhmm
 ```
 
+HiFi cross-platform and phasing are secondary branches and use:
+
+```bash
+conda env create -f environment-hifi.yml
+conda activate errhmm-hifi
+```
+
+The primary claims remain ONT.
+
+The internal phase1-phase7 shell orchestrator is not redistributed. Public
+reproduction uses the explicit `reproduce.sh` modes documented in the README.
+
 The external tool comparison environment is separate:
 
 ```bash

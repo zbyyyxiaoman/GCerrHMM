@@ -13,6 +13,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz",
       "sra_ont": "SRR39619343",
       "real_reads_ont": "data/real_reads_verified/Ecoli_ont.fastq.gz",
+      "min_mapq": 20,
+      "min_training_reads": 1000,
       "chr_list": [
         "all"
       ],
@@ -31,6 +33,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz",
       "sra_ont": "SRR39791672",
       "real_reads_ont": "data/real_reads_verified/Scerevisiae_ont.fastq.gz",
+      "min_mapq": 20,
+      "min_training_reads": 1000,
       "chr_list": [
         "all"
       ],
@@ -49,6 +53,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.2_TAIR10.1/GCF_000001735.2_TAIR10.1_genomic.fna.gz",
       "sra_ont": "ERR5716408",
       "real_reads_ont": "data/real_reads_verified/Athaliana_ont.fastq.gz",
+      "min_mapq": 20,
+      "min_training_reads": 1000,
       "chr_list": [
         "all"
       ],
@@ -67,6 +73,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/215/GCF_000001215.4_Release_6_plus_ISO1_MT/GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz",
       "sra_ont": "SRR22071686",
       "real_reads_ont": "data/real_reads_verified/Dmelanogaster_ont.fastq.gz",
+      "min_mapq": 20,
+      "min_training_reads": 1000,
       "chr_list": [
         "all"
       ],
@@ -85,6 +93,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/635/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz",
       "sra_ont": "SRR14685232",
       "real_reads_ont": "data/real_reads_verified/Mmusculus_ont.fastq.gz",
+      "min_mapq": 20,
+      "min_training_reads": 1000,
       "chr_list": [
         "all",
         "chr1",
@@ -109,6 +119,8 @@
       "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz",
       "sra_ont": "ERR13491992",
       "real_reads_ont": "data/real_reads_verified/Hsapiens_ont.fastq.gz",
+      "min_mapq": 0,
+      "min_training_reads": 1000,
       "chr_list": [
         "all",
         "chr1",

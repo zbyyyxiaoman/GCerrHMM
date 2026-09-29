@@ -12,6 +12,26 @@ model, the simulation and evaluation harness, the pre-registered decision
 rules, the frozen result checks, and the manuscript/figure builders. It does
 not redistribute sequencing reads.
 
+## Platform scope
+
+The primary claim and the primary six-genome analysis are ONT. HiFi is a
+secondary cross-platform check, and real HG002 HiFi reads are used for the
+independent phasing check. The old `map-hifi` and Raven workflows are legacy
+development artifacts, not the paper protocol.
+
+```text
+ONT                         primary claim and panel
+HiFi cross-platform check   secondary
+HG002 HiFi + WhatsHap       secondary real-data phasing check
+old map-hifi + Raven        legacy, not paper protocol
+```
+
+The public package deliberately exposes the reproducible `reproduce.sh`
+entry points. The internal phase1-phase7 shell orchestrator used during
+development is not part of the public distribution; use `--r1`,
+`--audit-panel`, `--framework-figures` and `--full-check` for the frozen
+paper tables and figures.
+
 ## Why this repository exists
 
 The central question is not whether a simulator can match one aggregate score.
@@ -268,6 +288,11 @@ Authors:
 
 The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the archived
 release DOI is `10.5281/zenodo.23034362`.
+
+The complete code and fixture ZIP is attached to the GitHub `v1.0.3` release.
+The Zenodo record contains the citation metadata, README and release manifest.
+The large sequencing inputs are downloaded through the configured accessions
+and `scripts/prepare_demo_data.py`.
 
 ## Licence
 
