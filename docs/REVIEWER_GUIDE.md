@@ -33,24 +33,23 @@ This is the fastest end-to-end test of the method itself. It retrains the
 GC-aware model and its one-bin control from one real BAM, simulates three
 matched routes, and evaluates all three with the Level-1 metrics.
 
-Prepare the demo inputs under a project root:
-
-```text
-data/
-  references/Ecoli_ref.fa
-  truth/Ecoli_variant_ref.fa                 # optional
-  real_reads_verified/Ecoli_ont_aligned.bam
-  real_reads_verified/Ecoli_ont.fastq.gz
-```
-
-Then run:
+The one-command path downloads the reference and public FASTQ, checks the
+configured checksum, builds the aligned BAM with minimap2/samtools, and runs
+the same deterministic quick chain:
 
 ```bash
 PROJECT_DIR=/path/to/project \
 CODE_DIR=/path/to/gcerrhmm/repository \
 THREADS=16 \
 JOBS=3 \
-bash /path/to/gcerrhmm/repository/reproduce.sh --quick-demo
+bash /path/to/gcerrhmm/repository/reproduce.sh --quick-reproduce
+```
+
+To prepare the inputs separately:
+
+```bash
+SPECIES=Ecoli THREADS=16 bash reproduce.sh --prepare-demo
+bash reproduce.sh --quick-demo
 ```
 
 Quick mode uses 1x coverage, 1,000 training reads, a 500-read evaluation

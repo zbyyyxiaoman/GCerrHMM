@@ -66,8 +66,13 @@ SPECIES=Ecoli COVERAGE=10 SEED=42 THREADS=16 JOBS=3 bash reproduce.sh --gc-demo
 For a fast deterministic smoke run of the same chain:
 
 ```bash
-SPECIES=Ecoli SEED=42 THREADS=16 JOBS=3 bash reproduce.sh --quick-demo
+SPECIES=Ecoli SEED=42 THREADS=16 JOBS=3 bash reproduce.sh --quick-reproduce
 ```
+
+`--quick-reproduce` downloads the public E. coli reference and ONT FASTQ,
+checks the configured FASTQ checksum, builds the aligned BAM with
+minimap2/samtools, and then runs the same deterministic quick chain. If the
+inputs already exist, use `--quick-demo` directly.
 
 The command refuses to overwrite an existing run directory. Outputs are
 written under `results/gc_improvement/<species>_<timestamp>/` and include:

@@ -88,13 +88,27 @@ launcher.
 
 ### 3. Run the fastest end-to-end algorithmic check
 
-The quick demo requires one real reference, one aligned BAM and the matching
-FASTQ at the documented paths below. It trains the GC-aware model and the
-one-bin control, simulates three matched routes, evaluates all three routes,
-and writes the C-minus-B report:
+For an end-to-end check from public data, use one command:
+
+```bash
+SPECIES=Ecoli THREADS=16 JOBS=3 bash reproduce.sh --quick-reproduce
+```
+
+It downloads the NCBI reference and public ONT FASTQ for the selected species,
+checks the configured FASTQ checksum, aligns the reads with minimap2/samtools,
+then trains the GC-aware model and the one-bin control, simulates three
+matched routes, evaluates all three routes, and writes the C-minus-B report.
+
+If the demo inputs are already prepared, the faster command is:
 
 ```bash
 bash reproduce.sh --quick-demo
+```
+
+The data preparation can also be run separately with:
+
+```bash
+SPECIES=Ecoli THREADS=16 bash reproduce.sh --prepare-demo
 ```
 
 Quick mode uses deterministic 1x coverage, reduced evaluation sampling and
@@ -160,6 +174,8 @@ refuse to continue on a checksum mismatch.
 | `bash reproduce.sh --tests` | Run the dependency-light unit tests. |
 | `bash reproduce.sh --static-check` | Compile Python files and syntax-check the shell launcher. |
 | `bash reproduce.sh --quick-demo` | Fast deterministic one-species train/simulate/evaluate chain. |
+| `bash reproduce.sh --prepare-demo` | Download one species reference/FASTQ and build its aligned BAM. |
+| `bash reproduce.sh --quick-reproduce` | Prepare missing demo data, then run `--quick-demo`. |
 | `bash reproduce.sh --gc-demo` | Publication-scale 10x train/simulate/evaluate chain. |
 | `bash reproduce.sh --r1` | Rebuild the six-species Level-1 summary from frozen JSON. |
 | `bash reproduce.sh --audit-panel` | Verify that the chr21 30x decision and figures use the pre-registered panel. |

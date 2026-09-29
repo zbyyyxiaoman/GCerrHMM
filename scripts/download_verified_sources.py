@@ -21,6 +21,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project-dir", default=".")
     parser.add_argument("--config", default="config/data_sources.json")
+    parser.add_argument(
+        "--species",
+        action="append",
+        default=[],
+        help="Download only the named species; may be supplied more than once.",
+    )
     parser.add_argument("--parts", type=int, default=8)
     parser.add_argument("--chunk-size", type=int, default=16 << 20)
     args = parser.parse_args()
@@ -29,8 +35,20 @@ def main():
     with open(project / args.config, encoding="utf-8") as handle:
         config = json.load(handle)
 
+    species_items = config["species"]
+    if args.species:
+        unknown = sorted(set(args.species) - set(species_items))
+        if unknown:
+            raise SystemExit(
+                "unknown species: " + ", ".join(unknown)
+                + "; available: " + ", ".join(sorted(species_items))
+            )
+        species_items = {
+            key: species_items[key] for key in args.species
+        }
+
     downloader = project / "scripts" / "download_fastq_multipart.py"
-    for species, item in config["species"].items():
+    for species, item in species_items.items():
         fastq = project / config["download_root"] / f"{species}_ont.fastq.gz"
         if item.get("fastq_verification") == "sra_conversion":
             sra = project / config["sra_root"] / f"{item['accession']}.sra"

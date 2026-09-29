@@ -29,6 +29,15 @@ run_gc_demo() {
     python3 "$ROOT/scripts/reproduce_gc_improvement.py" "${gc_args[@]}"
 }
 
+prepare_demo_data() {
+    python3 "$ROOT/scripts/prepare_demo_data.py" \
+        --project-dir "$PROJECT_DIR" \
+        --species "${SPECIES:-Ecoli}" \
+        --threads "${THREADS:-16}" \
+        --parts "${DOWNLOAD_PARTS:-8}" \
+        --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}"
+}
+
 case "$MODE" in
     --smoke)
         if command -v sha256sum >/dev/null 2>&1; then
@@ -58,6 +67,13 @@ case "$MODE" in
         run_gc_demo full
         ;;
     --quick-demo)
+        run_gc_demo quick
+        ;;
+    --prepare-demo)
+        prepare_demo_data
+        ;;
+    --quick-reproduce)
+        prepare_demo_data
         run_gc_demo quick
         ;;
     --framework-figures)
@@ -121,6 +137,10 @@ Usage: bash reproduce.sh [mode]
                 Compile every Python file and syntax-check every shell entry.
   --gc-demo     Retrain GC-aware and 1-bin models, resimulate, and compare.
   --quick-demo  Same chain with deterministic 1x/reduced-sampling presets.
+  --prepare-demo
+                Download one species reference/FASTQ and build its aligned BAM.
+  --quick-reproduce
+                Prepare missing demo data, then run --quick-demo.
   --framework-figures
                 Rebuild the teacher-framework summary tables and figures.
   --delta-to-real

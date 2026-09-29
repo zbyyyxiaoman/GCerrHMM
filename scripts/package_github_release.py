@@ -74,6 +74,7 @@ CORE_SCRIPTS = [
     "package_github_release.py",
     "plot_gc_error_curve.py",
     "pooled_gc_curve.py",
+    "prepare_demo_data.py",
     "project_paths.py",
     "recompute_kmer_metric.py",
     "reproduce_gc_improvement.py",
