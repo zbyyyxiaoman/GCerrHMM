@@ -1,0 +1,242 @@
+{
+  "project": "BMC_Bioinformatics_GC_Aware_Simulation_v2",
+  "note": "\u5305\u542b\u5927\u57fa\u56e0\u7ec4\u7269\u79cd\uff08\u4eba\u7c7b\u3001\u5c0f\u9f20\u7b49\uff09\uff0c\u652f\u6301\u5168\u57fa\u56e0\u7ec4\u548c\u67d3\u8272\u4f53\u7ea7\u522b\u5206\u6790",
+  "species": {
+    "Ecoli": {
+      "name": "Escherichia coli K-12",
+      "accession": "GCF_000005845.2",
+      "genome_size_mb": 4.6,
+      "gc_percent": 50.8,
+      "gc_category": "medium",
+      "kingdom": "bacteria",
+      "ref_fasta": "data/references/Ecoli_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz",
+      "sra_ont": "SRR39619343",
+      "real_reads_ont": "data/real_reads_verified/Ecoli_ont.fastq.gz",
+      "chr_list": [
+        "all"
+      ],
+      "test_mode": true,
+      "priority": 1,
+      "estimated_disk_gb": 2
+    },
+    "Scerevisiae": {
+      "name": "Saccharomyces cerevisiae S288C",
+      "accession": "GCF_000146045.2",
+      "genome_size_mb": 12.1,
+      "gc_percent": 38.2,
+      "gc_category": "medium_low",
+      "kingdom": "fungi",
+      "ref_fasta": "data/references/Scerevisiae_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz",
+      "sra_ont": "SRR39791672",
+      "real_reads_ont": "data/real_reads_verified/Scerevisiae_ont.fastq.gz",
+      "chr_list": [
+        "all"
+      ],
+      "test_mode": true,
+      "priority": 2,
+      "estimated_disk_gb": 5
+    },
+    "Athaliana": {
+      "name": "Arabidopsis thaliana",
+      "accession": "GCF_000001735.2",
+      "genome_size_mb": 135,
+      "gc_percent": 36.0,
+      "gc_category": "medium_low",
+      "kingdom": "plant",
+      "ref_fasta": "data/references/Athaliana_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.2_TAIR10.1/GCF_000001735.2_TAIR10.1_genomic.fna.gz",
+      "sra_ont": "ERR5716408",
+      "real_reads_ont": "data/real_reads_verified/Athaliana_ont.fastq.gz",
+      "chr_list": [
+        "all"
+      ],
+      "test_mode": false,
+      "priority": 3,
+      "estimated_disk_gb": 20
+    },
+    "Dmelanogaster": {
+      "name": "Drosophila melanogaster",
+      "accession": "GCF_000001215.4",
+      "genome_size_mb": 180,
+      "gc_percent": 42.0,
+      "gc_category": "medium",
+      "kingdom": "insect",
+      "ref_fasta": "data/references/Dmelanogaster_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/215/GCF_000001215.4_Release_6_plus_ISO1_MT/GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz",
+      "sra_ont": "SRR22071686",
+      "real_reads_ont": "data/real_reads_verified/Dmelanogaster_ont.fastq.gz",
+      "chr_list": [
+        "all"
+      ],
+      "test_mode": false,
+      "priority": 4,
+      "estimated_disk_gb": 25
+    },
+    "Mmusculus": {
+      "name": "Mus musculus",
+      "accession": "GCF_000001635.27",
+      "genome_size_mb": 2700,
+      "gc_percent": 42.0,
+      "gc_category": "medium",
+      "kingdom": "mammal",
+      "ref_fasta": "data/references/Mmusculus_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/635/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz",
+      "sra_ont": "SRR14685232",
+      "real_reads_ont": "data/real_reads_verified/Mmusculus_ont.fastq.gz",
+      "chr_list": [
+        "all",
+        "chr1",
+        "chr2",
+        "chr3",
+        "chr19",
+        "chrX"
+      ],
+      "test_mode": false,
+      "priority": 5,
+      "estimated_disk_gb": 150,
+      "note": "\u5927\u57fa\u56e0\u7ec4\uff1a\u5efa\u8bae\u5148\u7528\u5355\u4e2a\u67d3\u8272\u4f53\u6d4b\u8bd5\uff0c\u518d\u8dd1\u5168\u57fa\u56e0\u7ec4"
+    },
+    "Hsapiens": {
+      "name": "Homo sapiens",
+      "accession": "GCF_000001405.40",
+      "genome_size_mb": 3100,
+      "gc_percent": 40.9,
+      "gc_category": "medium_low",
+      "kingdom": "mammal",
+      "ref_fasta": "data/references/Hsapiens_ref.fa",
+      "ref_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz",
+      "sra_ont": "ERR13491992",
+      "real_reads_ont": "data/real_reads_verified/Hsapiens_ont.fastq.gz",
+      "chr_list": [
+        "all",
+        "chr1",
+        "chr21",
+        "chrX",
+        "chrY"
+      ],
+      "test_mode": false,
+      "priority": 6,
+      "estimated_disk_gb": 200,
+      "note": "\u8d85\u5927\u57fa\u56e0\u7ec4\uff1a\u5f3a\u70c8\u5efa\u8bae\u5148\u7528chr21(~47Mb)\u6d4b\u8bd5\uff0c\u786e\u8ba4\u6d41\u7a0b\u540e\u518d\u8dd1\u5168\u57fa\u56e0\u7ec4"
+    }
+  },
+  "analysis_modes": {
+    "quick_test": {
+      "description": "\u5feb\u901f\u6d4b\u8bd5\u6a21\u5f0f\uff1a\u53ea\u7528E.coli + \u9175\u6bcd\uff0c\u9a8c\u8bc1\u6d41\u7a0b",
+      "species": [
+        "Ecoli",
+        "Scerevisiae"
+      ],
+      "chr_mode": "all",
+      "coverage": 10,
+      "replicates": 2
+    },
+    "chr_level": {
+      "description": "\u67d3\u8272\u4f53\u7ea7\u522b\uff1a\u7528\u4eba\u7c7bchr21\u548c\u5c0f\u9f20chr19\u6d4b\u8bd5\u5927\u57fa\u56e0\u7ec4",
+      "species": [
+        "Ecoli",
+        "Scerevisiae",
+        "Athaliana",
+        "Hsapiens",
+        "Mmusculus"
+      ],
+      "chr_mode": "selected",
+      "selected_chr": {
+        "Hsapiens": [
+          "chr21"
+        ],
+        "Mmusculus": [
+          "chr19"
+        ]
+      },
+      "coverage": 30,
+      "replicates": 3
+    },
+    "full_genome": {
+      "description": "\u5168\u57fa\u56e0\u7ec4\u6a21\u5f0f\uff1a\u6240\u6709\u7269\u79cd\u5b8c\u6574\u57fa\u56e0\u7ec4",
+      "species": [
+        "Ecoli",
+        "Scerevisiae",
+        "Athaliana",
+        "Dmelanogaster",
+        "Mmusculus",
+        "Hsapiens"
+      ],
+      "chr_mode": "all",
+      "coverage": 30,
+      "replicates": 5
+    }
+  },
+  "simulation": {
+    "coverage": 30,
+    "replicates": 5,
+    "read_types": [
+      "ont"
+    ],
+    "routes": [
+      "route_A_sample",
+      "route_B_qshmm",
+      "route_C_errhmm"
+    ],
+    "hifi_params": {
+      "mean_length": 15000,
+      "std_length": 5000,
+      "mean_qv": 35
+    },
+    "ont_params": {
+      "mean_length": 25000,
+      "std_length": 10000,
+      "mean_qv": 15
+    }
+  },
+  "resource_estimates": {
+    "Ecoli": {
+      "memory_gb": 8,
+      "time_hours": 2,
+      "disk_gb": 10
+    },
+    "Scerevisiae": {
+      "memory_gb": 16,
+      "time_hours": 4,
+      "disk_gb": 20
+    },
+    "Athaliana": {
+      "memory_gb": 32,
+      "time_hours": 12,
+      "disk_gb": 60
+    },
+    "Dmelanogaster": {
+      "memory_gb": 32,
+      "time_hours": 16,
+      "disk_gb": 80
+    },
+    "Mmusculus_chr19": {
+      "memory_gb": 64,
+      "time_hours": 24,
+      "disk_gb": 120
+    },
+    "Mmusculus_full": {
+      "memory_gb": 256,
+      "time_hours": 72,
+      "disk_gb": 500
+    },
+    "Hsapiens_chr21": {
+      "memory_gb": 64,
+      "time_hours": 24,
+      "disk_gb": 150
+    },
+    "Hsapiens_full": {
+      "memory_gb": 512,
+      "time_hours": 96,
+      "disk_gb": 800
+    }
+  },
+  "evaluation": {
+    "gc_bins": 10,
+    "window_size": 100,
+    "kmer_size": 21,
+    "min_mapq": 20
+  }
+}

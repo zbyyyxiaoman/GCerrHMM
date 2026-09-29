@@ -1,0 +1,85 @@
+{
+  "download_root": "data/real_reads_verified",
+  "sra_root": "data/tmp/sra",
+  "reference_root": "data/references",
+  "species": {
+    "Ecoli": {
+      "accession": "SRR39619343",
+      "scientific_name": "Escherichia coli MG1655",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "PromethION",
+      "read_count": 125100,
+      "base_count": 1223828885,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR396/043/SRR39619343/SRR39619343_1.fastq.gz",
+      "fastq_size": 944128008,
+      "fastq_md5": "2111c29abf84538d20b5a9dafae05a2b",
+      "legacy_fastq": "data/real_reads/Ecoli_ont.fastq.gz",
+      "fastq_verification": "legacy_fastq"
+    },
+    "Scerevisiae": {
+      "accession": "SRR39791672",
+      "scientific_name": "Saccharomyces cerevisiae AJY4842",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "GridION",
+      "read_count": 339203,
+      "base_count": 1066964685,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR397/072/SRR39791672/SRR39791672_1.fastq.gz",
+      "fastq_size": 963343227,
+      "fastq_md5": "08a58dfc5ca5755c86bfcc3e9f35948a",
+      "legacy_fastq": "data/real_reads/Scerevisiae_ont.fastq.gz",
+      "fastq_verification": "legacy_fastq"
+    },
+    "Athaliana": {
+      "accession": "ERR5716408",
+      "scientific_name": "Arabidopsis thaliana",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "MinION",
+      "read_count": 197171,
+      "base_count": 2215468489,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR571/008/ERR5716408/ERR5716408.fastq.gz",
+      "fastq_size": 2126638717,
+      "fastq_md5": "7fbe4a0a5389746b1a53e728ac794ea2",
+      "sra_url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/ERR5716408/ERR5716408",
+      "sra_size": 1802802822,
+      "fastq_verification": "sra_conversion"
+    },
+    "Dmelanogaster": {
+      "accession": "SRR22071686",
+      "scientific_name": "Drosophila melanogaster",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "MinION",
+      "read_count": 341155,
+      "base_count": 3431554327,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/086/SRR22071686/SRR22071686_1.fastq.gz",
+      "fastq_size": 3483582465,
+      "fastq_md5": "0469000e5d9fb14d340b2f0b600520c0",
+      "sra_url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR22071686/SRR22071686",
+      "sra_size": 3100177242,
+      "fastq_verification": "sra_conversion"
+    },
+    "Mmusculus": {
+      "accession": "SRR14685232",
+      "scientific_name": "Mus musculus domesticus",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "PromethION",
+      "read_count": 498644,
+      "base_count": 5357798148,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR146/032/SRR14685232/SRR14685232_1.fastq.gz",
+      "fastq_size": 4786825391,
+      "fastq_md5": "38ed2ee379cd236409fc5dd663babed0",
+      "legacy_fastq": "data/real_reads/Mmusculus_ont.fastq.gz"
+    },
+    "Hsapiens": {
+      "accession": "ERR13491992",
+      "scientific_name": "Homo sapiens",
+      "platform": "OXFORD_NANOPORE",
+      "instrument_model": "PromethION",
+      "read_count": 175804,
+      "base_count": 5104496738,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR134/092/ERR13491992/ERR13491992.fastq.gz",
+      "fastq_size": 4357175142,
+      "fastq_md5": "b967059cee7a8db31cdea2ab41a12b0c",
+      "legacy_fastq": "data/real_reads/Hsapiens_ont.fastq.gz"
+    }
+  }
+}

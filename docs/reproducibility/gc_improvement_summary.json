@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "species": "Ecoli",
+    "coverage": 10.0,
+    "platform": "ont",
+    "seed": 42,
+    "reference": "data/references/Ecoli_ref.fa",
+    "simulation_ref": "data/truth/Ecoli_variant_ref.fa",
+    "bam": "data/real_reads_verified/Ecoli_ont_aligned.bam",
+    "real_fastq": "data/real_reads_verified/Ecoli_ont.fastq.gz",
+    "gc_bins": 10,
+    "max_reads": 10000,
+    "repo_dir": "code"
+  },
+  "routes": [
+    {
+      "route": "sample_A",
+      "composite": 85.31,
+      "read_length": 99.24,
+      "qv": 70.09,
+      "gc": 97.9,
+      "kmer": 70.72
+    },
+    {
+      "route": "errhmm_1bin",
+      "composite": 86.69,
+      "read_length": 99.19,
+      "qv": 70.1,
+      "gc": 98.68,
+      "kmer": 76.32
+    },
+    {
+      "route": "errhmm_gc",
+      "composite": 86.92,
+      "read_length": 99.19,
+      "qv": 70.1,
+      "gc": 98.73,
+      "kmer": 77.4
+    }
+  ],
+  "gc_minus_1bin": {
+    "composite": 0.23000000000000398,
+    "read_length": 0.0,
+    "qv": 0.0,
+    "gc": 0.04999999999999716,
+    "kmer": 1.0800000000000125
+  },
+  "gate": {
+    "kmer_positive": true,
+    "composite_positive": true,
+    "gc_positive": true
+  }
+}

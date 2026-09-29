@@ -1,0 +1,11 @@
+name: toolcompare
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - nanosim=3.2.3
+  - pbsim3=3.0.5
+  - badread=0.4.2
+  - minimap2=2.31
+  - samtools=1.23.1

@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "errHMM: GC-aware long-read sequencing simulator and benchmark"
+message: "If you use this software, please cite the archived release."
+type: software
+license: MIT
+authors:
+  - name: "errHMM contributors"
+version: "1.0.0"
+date-released: "2026-09-19"
+repository-code: "TO_BE_FILLED_AFTER_GITHUB_RELEASE"

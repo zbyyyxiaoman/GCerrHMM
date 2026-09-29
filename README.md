@@ -243,4 +243,4 @@ MIT. See [`LICENSE`](LICENSE).
 ## Uploading the clean release
 
 For a step-by-step Windows/GitHub tutorial, see
-[`UPLOAD_GUIDE.md`](UPLOAD_GUIDE.md
+[`UPLOAD_GUIDE.md`](UPLOAD_GUIDE.md).

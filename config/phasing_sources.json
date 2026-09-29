@@ -1,0 +1,34 @@
+{
+  "sample": "HG002",
+  "download_root": "data/real_reads_hifi_phasing",
+  "truth_root": "data/truth/phasing",
+  "hifi": {
+    "accession": "SRR18239006",
+    "scientific_name": "Homo sapiens",
+    "instrument_model": "Sequel II",
+    "library_name": "HG002-HIFI-m64014_210227_165255",
+    "read_count": 1690729,
+    "base_count": 32350175787,
+    "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR182/006/SRR18239006/SRR18239006_subreads.fastq.gz",
+    "fastq_md5": "c670abbc7c7a25a31a3eb36c8372bc8f",
+    "fastq_bytes": 25925530345
+  },
+  "truth": {
+    "sample": "HG002",
+    "assembly": "GRCh38",
+    "vcf_url": "https://ftp.ncbi.nlm.nih.gov/giab/ftp/release/AshkenazimTrio/HG002_NA24385_son/NISTv4.2.1/GRCh38/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz",
+    "vcf_bytes": 156252944,
+    "vcf_md5": null,
+    "index_url": "https://ftp.ncbi.nlm.nih.gov/giab/ftp/release/AshkenazimTrio/HG002_NA24385_son/NISTv4.2.1/GRCh38/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz.tbi",
+    "index_bytes": 1657747
+  },
+  "aligned_source": {
+    "sample": "HG002",
+    "bam_url": "https://giab.s3.amazonaws.com/data/AshkenazimTrio/HG002_NA24385_son/PacBio_CCS_15kb/alignment/HG002.Sequel.15kb.pbmm2.hs37d5.whatshap.haplotag.RTG.10x.trio.bam",
+    "index_url": "https://giab.s3.amazonaws.com/data/AshkenazimTrio/HG002_NA24385_son/PacBio_CCS_15kb/alignment/HG002.Sequel.15kb.pbmm2.hs37d5.whatshap.haplotag.RTG.10x.trio.bam.bai",
+    "source_assembly": "hs37d5",
+    "region": "21",
+    "project_reference": "data/references/Hsapiens_chr21_ref.fa",
+    "extraction_tool": "samtools view -b URL 21 | samtools fastq -"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "title": "GCerrHMM: a GC-aware error hidden Markov model for long-read sequencing simulation with a reproducible fidelity harness",
+  "authors": [
+    {
+      "full_name": "",
+      "given_names": "",
+      "family_name": "",
+      "orcid": "",
+      "email": "",
+      "affiliations": [
+        "1"
+      ],
+      "corresponding": true
+    }
+  ],
+  "affiliations": [
+    {
+      "id": "1",
+      "name": "",
+      "department": "",
+      "city": "",
+      "postal_code": "",
+      "country": ""
+    }
+  ],
+  "funding": [
+    {
+      "funder": "",
+      "grant_id": ""
+    }
+  ],
+  "competing_interests": "",
+  "acknowledgements": "",
+  "authors_contributions": "",
+  "repository_url": "",
+  "zenodo_doi": "",
+  "license": "CC BY",
+  "confirmations": {
+    "all_authors_approved": false,
+    "not_published_elsewhere": false
+  },
+  "suggested_reviewers": [],
+  "cover_letter": {
+    "date": "",
+    "editor": "Editor-in-Chief",
+    "journal": "BMC Bioinformatics",
+    "collection": "Simulated and synthetic data in bioinformatics: statistical methods, models, and applications",
+    "signatory": ""
+  }
+}

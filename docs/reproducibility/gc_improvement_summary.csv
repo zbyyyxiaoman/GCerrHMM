@@ -1,0 +1,4 @@
+route,composite,read_length,qv,gc,kmer
+sample_A,85.31,99.24,70.09,97.9,70.72
+errhmm_1bin,86.69,99.19,70.1,98.68,76.32
+errhmm_gc,86.92,99.19,70.1,98.73,77.4

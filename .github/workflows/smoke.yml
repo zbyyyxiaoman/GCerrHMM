@@ -1,0 +1,18 @@
+name: reproducibility-smoke
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static syntax audit
+        run: bash reproduce.sh --static-check
+      - name: Unit tests
+        run: bash reproduce.sh --tests
+      - name: Verify frozen artifacts
+        run: bash reproduce.sh --smoke

@@ -1,0 +1,71 @@
+{
+  "download_root": "data/real_reads_hifi",
+  "sources": {
+    "Ecoli": {
+      "accession": "ERR12723508",
+      "scientific_name": "Escherichia coli",
+      "instrument_model": "Sequel IIe",
+      "library_name": "DSM_103246_ISO24A_bc2010_hifi_reads",
+      "read_count": 114437,
+      "base_count": 1256140563,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR127/008/ERR12723508/ERR12723508.fastq.gz",
+      "fastq_md5": "9c5accf31c0208cec5a443b91ffb9a0a",
+      "fastq_bytes": 882258980
+    },
+    "Scerevisiae": {
+      "accession": "SRR31637145",
+      "scientific_name": "Saccharomyces cerevisiae",
+      "instrument_model": "Sequel II",
+      "library_name": "S12.hifi_reads",
+      "read_count": 588055,
+      "base_count": 9921474174,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR316/045/SRR31637145/SRR31637145_subreads.fastq.gz",
+      "fastq_md5": "6a01cbccf74fc220fe322a436bbd30e3",
+      "fastq_bytes": 6897237297
+    },
+    "Athaliana": {
+      "accession": "SRR14728885",
+      "scientific_name": "Arabidopsis thaliana",
+      "instrument_model": "Sequel II",
+      "library_name": "AT_HiFi",
+      "read_count": 1517433,
+      "base_count": 22904700074,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR147/085/SRR14728885/SRR14728885_subreads.fastq.gz",
+      "fastq_md5": "c5a2adfb022db4a55e3c81f25566d853",
+      "fastq_bytes": 18526201575
+    },
+    "Dmelanogaster": {
+      "accession": "SRR9969842",
+      "scientific_name": "Drosophila melanogaster",
+      "instrument_model": "Sequel II",
+      "library_name": "Dmel_A4xISO1_HiFi_11kb",
+      "read_count": 443931,
+      "base_count": 5479592813,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR996/002/SRR9969842/SRR9969842_subreads.fastq.gz",
+      "fastq_md5": "71cb537745aaa0933215bd7f58469d4a",
+      "fastq_bytes": 4699138773
+    },
+    "Mmusculus": {
+      "accession": "SRR28703375",
+      "scientific_name": "Mus musculus",
+      "instrument_model": "Sequel II",
+      "library_name": "mhaESC PB Hifi2",
+      "read_count": 4878085,
+      "base_count": 86365832271,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR287/075/SRR28703375/SRR28703375_subreads.fastq.gz",
+      "fastq_md5": "b234a4c41c0bcd1ced91e70eb509a406",
+      "fastq_bytes": 40181658671
+    },
+    "Hsapiens": {
+      "accession": "ERR13110527",
+      "scientific_name": "Homo sapiens",
+      "instrument_model": "Sequel II",
+      "library_name": "HG00731_PacBio_HiFi",
+      "read_count": 2103813,
+      "base_count": 39963645699,
+      "fastq_url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/027/ERR13110527/ERR13110527.fastq.gz",
+      "fastq_md5": "152e4d9ae568a2a7493614e60be7f332",
+      "fastq_bytes": 32069937023
+    }
+  }
+}
