@@ -1,0 +1,7 @@
+species,scientific_name,reference,genome_size_mb,gc_percent,gc_heterogeneity_sd_1kb,reference_accession,ont_read_accession
+E. coli,Escherichia coli,E. coli (full),4.641652,50.79070985933456,4.800429369076229,GCF_000005845.2,SRR39619343
+S. cerevisiae,Saccharomyces cerevisiae,S. cerevisiae (full),12.157105,38.14786497278752,3.825568513640168,GCF_000146045.2,SRR39791672
+A. thaliana,Arabidopsis thaliana,A. thaliana (full),119.668634,36.05598671007913,5.507087684379963,GCF_000001735.2,ERR5716408
+D. melanogaster,Drosophila melanogaster,D. melanogaster (full),143.726002,42.00618274043202,6.342989776927385,GCF_000001215.4,SRR22071686
+M. musculus chr19,Mus musculus chr19,M. musculus chr19,61.446768,42.72453097264904,5.69490694532891,GCF_000001635.27,SRR14685232
+H. sapiens chr21,Homo sapiens chr21,H. sapiens chr21,51.459182,41.15821157934135,8.167634983039722,GCF_000001405.40,ERR13491992
