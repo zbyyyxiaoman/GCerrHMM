@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+from datetime import datetime
 from pathlib import Path
+import zipfile
+import re
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -13,6 +16,33 @@ from docx.shared import Inches, Pt
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
+
+
+BUILD_TIME = datetime(2026, 9, 29, 0, 0, 0)
+ZIP_TIME = (2026, 9, 29, 0, 0, 0)
+FIXED_TIMESTAMP = "2026-09-29T00:00:00Z"
+
+
+def normalize_archive(path: Path) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with zipfile.ZipFile(path) as source, zipfile.ZipFile(
+        temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+    ) as target:
+        for info in sorted(source.infolist(), key=lambda item: item.filename):
+            payload = source.read(info.filename)
+            if info.filename == "docProps/core.xml":
+                text = payload.decode("utf-8")
+                text = re.sub(
+                    r"(<dcterms:modified[^>]*>)[^<]+(</dcterms:modified>)",
+                    rf"\g<1>{FIXED_TIMESTAMP}\g<2>",
+                    text,
+                )
+                payload = text.encode("utf-8")
+            normalized = zipfile.ZipInfo(info.filename, ZIP_TIME)
+            normalized.compress_type = zipfile.ZIP_DEFLATED
+            normalized.external_attr = info.external_attr
+            target.writestr(normalized, payload)
+    temporary.replace(path)
 
 
 def read_csv(path: Path) -> list[list[str]]:
@@ -36,6 +66,8 @@ def write_workbook(
     sheets: list[tuple[str, Path]],
 ) -> None:
     workbook = Workbook()
+    workbook.properties.created = BUILD_TIME
+    workbook.properties.modified = BUILD_TIME
     workbook.remove(workbook.active)
     for sheet_name, source in sheets:
         rows = read_csv(source)
@@ -55,6 +87,7 @@ def write_workbook(
         sheet.freeze_panes = "A2"
     output.parent.mkdir(parents=True, exist_ok=True)
     workbook.save(output)
+    normalize_archive(output)
 
 
 def add_paragraph(
@@ -95,6 +128,8 @@ def write_note(
     table: list[list[str]] | None = None,
 ) -> None:
     document = Document()
+    document.core_properties.created = BUILD_TIME
+    document.core_properties.modified = BUILD_TIME
     set_note_style(document)
     heading = document.add_paragraph(style="Title")
     heading.add_run(title)
@@ -114,6 +149,7 @@ def write_note(
                 cells[index].text = str(value)
     output.parent.mkdir(parents=True, exist_ok=True)
     document.save(output)
+    normalize_archive(output)
 
 
 def main() -> None:
