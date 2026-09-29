@@ -193,6 +193,11 @@ Public read accessions, expected sizes and checksums are recorded in
 [`config/data_sources.json`](config/data_sources.json). The download helpers
 refuse to continue on a checksum mismatch.
 
+For the paper-specific mouse chr19 and human chr21 anchor inputs, see
+[`docs/panel_support.md`](docs/panel_support.md). Those panels require
+explicit chromosome/anchor preparation; whole-genome mouse or human inputs
+must not be substituted for them.
+
 ## Commands
 
 | Command | Purpose |

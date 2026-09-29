@@ -100,6 +100,7 @@ DOCS = [
     "gcerrhmm_main_figure_captions.md",
     "kmer_metric_audit.md",
     "manuscript_number_map.md",
+    "panel_support.md",
     "panel_provenance.md",
     "REVIEWER_GUIDE.md",
     "sv_evaluation_protocol.md",

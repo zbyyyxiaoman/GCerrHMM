@@ -146,6 +146,12 @@ def main() -> int:
         )
     if args.species not in source_config["species"]:
         raise SystemExit(f"{args.species} has no configured ONT source")
+    if args.species in {"Mmusculus", "Hsapiens"}:
+        raise SystemExit(
+            f"{args.species} is not the paper panel. The paper uses "
+            "M. musculus chr19 and HG002 H. sapiens chr21 30x; see "
+            "docs/panel_support.md for the panel-specific preparation."
+        )
 
     reference = prepare_reference(
         project,
