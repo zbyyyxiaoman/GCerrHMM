@@ -15,4 +15,5 @@ dependencies:
   - flye=2.9.6
   - bedtools
   - seqkit
+  - sra-tools
   - pigz

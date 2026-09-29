@@ -54,17 +54,14 @@ def prepare_fastq(
     species: str,
     parts: int,
     chunk_size: int,
+    sra_tool: str | None,
+    sra_threads: int,
 ) -> Path:
     item = config["species"][species]
     fastq = project / config["download_root"] / f"{species}_ont.fastq.gz"
     if fastq.exists() and fastq.stat().st_size > 0:
         print(f"[skip] FASTQ exists: {fastq}")
         return fastq
-    if item.get("fastq_verification") == "sra_conversion":
-        raise SystemExit(
-            f"{species} uses SRA conversion; run the documented SRA conversion "
-            "step before using this helper"
-        )
     command = [
         sys.executable,
         str(project / "scripts" / "download_verified_sources.py"),
@@ -77,6 +74,9 @@ def prepare_fastq(
         "--chunk-size",
         str(chunk_size),
     ]
+    if sra_tool:
+        command += ["--sra-tool", sra_tool]
+    command += ["--sra-threads", str(sra_threads)]
     subprocess.run(command, check=True)
     if not fastq.exists() or fastq.stat().st_size == 0:
         raise SystemExit(f"FASTQ was not created: {fastq}")
@@ -126,6 +126,8 @@ def main() -> int:
     parser.add_argument("--threads", type=int, default=16)
     parser.add_argument("--parts", type=int, default=8)
     parser.add_argument("--chunk-size", type=int, default=16 << 20)
+    parser.add_argument("--sra-tool", default=None)
+    parser.add_argument("--sra-threads", type=int, default=8)
     args = parser.parse_args()
 
     project = Path(args.project_dir).resolve()
@@ -156,6 +158,8 @@ def main() -> int:
         args.species,
         args.parts,
         args.chunk_size,
+        args.sra_tool,
+        args.sra_threads,
     )
     bam = prepare_alignment(
         project,

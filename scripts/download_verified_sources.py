@@ -2,8 +2,10 @@
 """Download all configured source files and reuse verified legacy copies."""
 
 import argparse
+import gzip
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +17,48 @@ def verified(path, size, expected_md5=None):
     if not path.exists() or path.stat().st_size != size:
         return False
     return expected_md5 is None or md5_file(path).lower() == expected_md5.lower()
+
+
+def convert_sra(sra_path, fastq_path, tool=None, threads=8):
+    """Convert an SRA archive to a gzip FASTQ using SRA Toolkit."""
+    if fastq_path.exists() and fastq_path.stat().st_size > 0:
+        print(f"[SKIP] FASTQ exists: {fastq_path}")
+        return
+    candidates = [tool] if tool else ["fasterq-dump", "fastq-dump"]
+    executable = next(
+        (candidate for candidate in candidates if candidate and shutil.which(candidate)),
+        None,
+    )
+    if executable is None:
+        raise SystemExit(
+            "SRA conversion requested but neither `fasterq-dump` nor "
+            "`fastq-dump` is available; install sra-tools"
+        )
+    temporary = fastq_path.with_name(fastq_path.name + ".extract")
+    if temporary.exists():
+        shutil.rmtree(temporary)
+    temporary.mkdir(parents=True)
+    command = [
+        executable,
+        "--split-files",
+        "--threads",
+        str(int(threads)),
+        "--outdir",
+        str(temporary),
+        str(sra_path),
+    ]
+    print("[SRA] " + " ".join(command))
+    subprocess.run(command, check=True)
+    fastq_files = sorted(temporary.glob("*.fastq"))
+    if not fastq_files:
+        raise SystemExit(f"SRA conversion produced no FASTQ files: {temporary}")
+    fastq_path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(fastq_path, "wb") as output:
+        for part in fastq_files:
+            with part.open("rb") as source:
+                shutil.copyfileobj(source, output, length=8 << 20)
+    shutil.rmtree(temporary)
+    print(f"[SRA] wrote {fastq_path}")
 
 
 def main():
@@ -29,6 +73,8 @@ def main():
     )
     parser.add_argument("--parts", type=int, default=8)
     parser.add_argument("--chunk-size", type=int, default=16 << 20)
+    parser.add_argument("--sra-tool", default=None)
+    parser.add_argument("--sra-threads", type=int, default=8)
     args = parser.parse_args()
 
     project = Path(args.project_dir).resolve()
@@ -61,6 +107,7 @@ def main():
                     "--parts", str(args.parts),
                     "--chunk-size", str(args.chunk_size),
                 ], check=True)
+            convert_sra(sra, fastq, args.sra_tool, args.sra_threads)
             continue
 
         if verified(fastq, item["fastq_size"], item["fastq_md5"]):

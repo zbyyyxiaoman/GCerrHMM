@@ -35,7 +35,8 @@ prepare_demo_data() {
         --species "${SPECIES:-Ecoli}" \
         --threads "${THREADS:-16}" \
         --parts "${DOWNLOAD_PARTS:-8}" \
-        --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}"
+        --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}" \
+        --sra-threads "${SRA_THREADS:-4}"
 }
 
 run_fixture_demo() {
