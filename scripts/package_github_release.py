@@ -20,7 +20,6 @@ ROOT_FILES = [
     "LICENSE",
     "README.md",
     "REPRODUCIBILITY.md",
-    "UPLOAD_GUIDE.md",
     "environment-tools.yml",
     "environment.yml",
     "reproduce.sh",
@@ -87,8 +86,6 @@ CORE_SCRIPTS = [
 ]
 
 DOCS = [
-    "BMC_Technical_Design_v2.md",
-    "claim_wording_options.md",
     "composite_evaluation_protocol.md",
     "cross_tool_reproducibility_notes.md",
     "delta_to_real_framing.md",
@@ -97,18 +94,12 @@ DOCS = [
     "errhmm_paper_visuals_20260918.zip",
     "figure_captions.md",
     "final_cross_tool_comparison.md",
-    "framework_data_gaps.md",
     "gc_aware_algorithm.md",
-    "GITHUB_RELEASE_CHECKLIST.md",
     "gcerrhmm_main_figure_captions.md",
-    "gcerrhmm_main_figure_status.md",
-    "hifi_region_strategy.md",
     "kmer_metric_audit.md",
     "panel_provenance.md",
     "REVIEWER_GUIDE.md",
-    "REPRODUCIBILITY_AUDIT_20260927.md",
     "sv_evaluation_protocol.md",
-    "teacher_framework_design.md",
 ]
 
 REPRODUCIBILITY_FILES = [
@@ -165,13 +156,13 @@ PORTABLE_REPLACEMENTS = (
 PRIVATE_USER_MARKERS = (
     b"27" + b"947",
     b"bob" + b"by",
-    b"z" + b"by",
 )
 
 PRIVATE_PATH_MARKERS = (
     b"27" + b"947",
     (b"10." + b"70.5.64"),
     b"/home/" + b"bob" + b"by",
+    b"/home/" + b"z" + b"by",
     b"C:\\Users\\" + b"27" + b"947",
     b"/mnt/c/Users/" + b"27" + b"947",
     b"Desktop/bmc_" + b"project",

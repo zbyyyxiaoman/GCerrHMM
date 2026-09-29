@@ -1,10 +1,19 @@
 cff-version: 1.2.0
-title: "errHMM: GC-aware long-read sequencing simulator and benchmark"
+title: "GCerrHMM: GC-aware error modelling for Oxford Nanopore read simulation"
 message: "If you use this software, please cite the archived release."
 type: software
 license: MIT
 authors:
-  - name: "errHMM contributors"
-version: "1.0.0"
-date-released: "2026-09-19"
-repository-code: "TO_BE_FILLED_AFTER_GITHUB_RELEASE"
+  - family-names: "Zhang"
+    given-names: "Boyang"
+    affiliation: "Faculty of Life Science and Medicine, Harbin Institute of Technology, Harbin, China"
+  - family-names: "Jiang"
+    given-names: "Tao"
+    affiliation: "Faculty of Computing, Harbin Institute of Technology, Harbin, China"
+contact:
+  - family-names: "Jiang"
+    given-names: "Tao"
+    affiliation: "Faculty of Computing, Harbin Institute of Technology, Harbin, China"
+version: "1.0.1"
+date-released: "2026-09-29"
+repository-code: "https://github.com/zbyyyxiaoman/GCerrHMM"

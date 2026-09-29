@@ -5,6 +5,11 @@ come from the authors. Do not invent these values. Fill
 `docs/manuscript/author_metadata.template.json` and then run the metadata
 application script.
 
+Author names, affiliations and the corresponding-author designation are now
+supplied for Boyang Zhang and Tao Jiang. Email addresses, ORCIDs, funding,
+competing interests, CRediT contributions and the Zenodo DOI still require
+confirmation before submission.
+
 ## Required fields
 
 | Field | Where it is used | Status |

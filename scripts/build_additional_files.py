@@ -220,10 +220,9 @@ def main() -> None:
             (
                 "Verification",
                 [
-                    "The final audit passes 13 tests, 93 Python files, 158 shell "
-                    "scripts, 73 frozen artifacts, 1020 data-integrity checks, "
-                    "and the 30x panel provenance gate. The audit record is "
-                    "docs/REPRODUCIBILITY_AUDIT_20260927.md.",
+                    "The verification entry points are `reproduce.sh --tests`, "
+                    "`reproduce.sh --static-check` and `reproduce.sh --smoke`; "
+                    "the reviewer checklist is docs/REVIEWER_GUIDE.md.",
                 ],
             ),
         ],

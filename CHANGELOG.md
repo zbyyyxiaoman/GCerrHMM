@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 - 2026-09-29
+
+- Added the confirmed author and affiliation metadata.
+- Set Tao Jiang as corresponding author in the CFF and submission metadata.
+- Added the public GitHub repository URL to the citation record.
+
 ## 1.0.0 - 2026-09-29
 
 - Initial public-release candidate.
@@ -10,4 +16,3 @@
 - Coverage-matched chr21 30x delta-to-real decision code.
 - Frozen-artifact audits and reproducibility entry points.
 - Manuscript, figure and Additional-file builders.
-

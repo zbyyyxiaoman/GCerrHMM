@@ -233,14 +233,18 @@ tests/
 
 The current submission package is under
 [`docs/manuscript/`](docs/manuscript/). Citation metadata is in
-[`CITATION.cff`](CITATION.cff). The repository URL and Zenodo DOI are filled
-after archival release.
+[`CITATION.cff`](CITATION.cff).
+
+Authors:
+
+* Boyang Zhang, Faculty of Life Science and Medicine, Harbin Institute of
+  Technology.
+* Tao Jiang, Faculty of Computing, Harbin Institute of Technology
+  (corresponding author).
+
+The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the Zenodo
+DOI is filled after archival release.
 
 ## Licence
 
 MIT. See [`LICENSE`](LICENSE).
-
-## Uploading the clean release
-
-For a step-by-step Windows/GitHub tutorial, see
-[`UPLOAD_GUIDE.md`](UPLOAD_GUIDE.md).

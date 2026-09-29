@@ -1,9 +1,14 @@
 {
-  "title": "errHMM: GC-aware long-read sequencing simulator and benchmark",
+  "title": "GCerrHMM: GC-aware error modelling for Oxford Nanopore read simulation",
   "description": "Code, frozen result tables, and publication-ready figures for a GC-aware error HMM for Oxford Nanopore long-read simulation.",
   "creators": [
     {
-      "name": "errHMM contributors"
+      "name": "Zhang, Boyang",
+      "affiliation": "Faculty of Life Science and Medicine, Harbin Institute of Technology, Harbin, China"
+    },
+    {
+      "name": "Jiang, Tao",
+      "affiliation": "Faculty of Computing, Harbin Institute of Technology, Harbin, China"
     }
   ],
   "license": "MIT",

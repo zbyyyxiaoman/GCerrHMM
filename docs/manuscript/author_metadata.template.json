@@ -2,13 +2,24 @@
   "title": "GCerrHMM: a GC-aware error hidden Markov model for long-read sequencing simulation with a reproducible fidelity harness",
   "authors": [
     {
-      "full_name": "",
-      "given_names": "",
-      "family_name": "",
+      "full_name": "Boyang Zhang",
+      "given_names": "Boyang",
+      "family_name": "Zhang",
       "orcid": "",
       "email": "",
       "affiliations": [
         "1"
+      ],
+      "corresponding": false
+    },
+    {
+      "full_name": "Tao Jiang",
+      "given_names": "Tao",
+      "family_name": "Jiang",
+      "orcid": "",
+      "email": "",
+      "affiliations": [
+        "2"
       ],
       "corresponding": true
     }
@@ -16,11 +27,19 @@
   "affiliations": [
     {
       "id": "1",
-      "name": "",
-      "department": "",
-      "city": "",
+      "name": "Harbin Institute of Technology",
+      "department": "Faculty of Life Science and Medicine",
+      "city": "Harbin",
       "postal_code": "",
-      "country": ""
+      "country": "China"
+    },
+    {
+      "id": "2",
+      "name": "Harbin Institute of Technology",
+      "department": "Faculty of Computing",
+      "city": "Harbin",
+      "postal_code": "",
+      "country": "China"
     }
   ],
   "funding": [
@@ -45,6 +64,6 @@
     "editor": "Editor-in-Chief",
     "journal": "BMC Bioinformatics",
     "collection": "Simulated and synthetic data in bioinformatics: statistical methods, models, and applications",
-    "signatory": ""
+    "signatory": "Tao Jiang"
   }
 }
