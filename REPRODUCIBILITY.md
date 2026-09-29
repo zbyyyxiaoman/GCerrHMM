@@ -38,6 +38,11 @@ Run:
 bash reproduce.sh --smoke
 ```
 
+The frozen text results required by the table and figure commands are included
+in `docs/reproducibility/results_bundle/`. The launcher installs missing files
+into `results/` automatically and preserves conflicting existing files instead
+of mixing result vintages.
+
 This verifies:
 
 - the R1 Level-1 overall CSV/Markdown/provenance files;

@@ -91,6 +91,13 @@ conda env create -f environment-tools.yml
 conda activate toolcompare
 ```
 
+For the secondary HiFi/phasing branch, create the separate HiFi environment:
+
+```bash
+conda env create -f environment-hifi.yml
+conda activate errhmm-hifi
+```
+
 ### 2. Run the data-free checks first
 
 These commands work from a clean clone and do not require sequencing reads:
@@ -125,6 +132,9 @@ It downloads the NCBI reference and public ONT FASTQ for the selected species,
 checks the configured FASTQ checksum, aligns the reads with minimap2/samtools,
 then trains the GC-aware model and the one-bin control, simulates three
 matched routes, evaluates all three routes, and writes the C-minus-B report.
+The launcher caps `samtools sort` threads from available memory, so the
+documented `THREADS=16` request is safe on smaller workstations; use
+`SORT_MEMORY` or `SORT_THREADS` to override the automatic choice.
 
 If the demo inputs are already prepared, the faster command is:
 
@@ -163,6 +173,21 @@ PROJECT_DIR=/path/to/project bash reproduce.sh --full-check
 [`docs/data_freeze_manifest.md`](docs/data_freeze_manifest.md). It is expected
 to fail in a bare clone because the large input and result trees are
 intentionally not redistributed.
+
+The frozen paper-facing tables, the chr21 30x decision panel, and the figure
+sources are included as a portable result bundle under
+`docs/reproducibility/results_bundle/`. The public commands materialise that
+bundle into `results/` automatically:
+
+```bash
+bash reproduce.sh --r1
+bash reproduce.sh --audit-panel
+bash reproduce.sh --framework-figures
+bash reproduce.sh --delta-to-real
+```
+
+Use `bash reproduce.sh --install-results` to materialise the bundle without
+running an analysis command.
 
 ## Data layout
 
@@ -213,6 +238,7 @@ must not be substituted for them.
 | `bash reproduce.sh --r1` | Rebuild the six-species Level-1 summary from frozen JSON. |
 | `bash reproduce.sh --audit-panel` | Verify that the chr21 30x decision and figures use the pre-registered panel. |
 | `bash reproduce.sh --framework-figures` | Rebuild summary tables and framework figures. |
+| `bash reproduce.sh --additional-files` | Build Additional files 1-7 from the frozen result bundle. |
 | `bash reproduce.sh --full-check` | Verify the full data freeze manifest when the project data are present. |
 | `bash reproduce.sh --audit-paths` | Scan the release for non-portable absolute paths; set `PATH_AUDIT_STRICT=1` to fail on findings. |
 

@@ -17,6 +17,12 @@ from reproduce_gc_improvement import (  # noqa: E402
     resolve_run_settings,
     resolve_threads,
 )
+from prepare_demo_data import (  # noqa: E402
+    archive_corrupt,
+    gzip_complete,
+    parse_size,
+    select_sort_threads,
+)
 
 
 def test_quick_settings_are_small_and_deterministic():
@@ -51,6 +57,32 @@ def test_thread_budget_is_capped_and_allocated():
     assert resolve_threads(0) == 1
     assert allocate_threads(16, 3) == [6, 5, 5]
     assert allocate_threads(2, 3) == [1, 1]
+
+
+def test_sort_memory_and_threads_are_bounded_by_available_memory():
+    assert parse_size("1G") == 1 << 30
+    assert parse_size("512M") == 512 << 20
+    assert select_sort_threads(
+        16,
+        1 << 30,
+        available_bytes=8 << 30,
+    ) == 4
+    assert select_sort_threads(
+        16,
+        1 << 30,
+        explicit_sort_threads=2,
+        available_bytes=8 << 30,
+    ) == 2
+
+
+def test_corrupt_gzip_is_rejected_and_archived():
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "broken.fastq.gz"
+        path.write_bytes(b"\x1f\x8b\x08\x00truncated")
+        assert not gzip_complete(path)
+        archived = archive_corrupt(path)
+        assert not path.exists()
+        assert archived.exists()
 
 
 def test_release_script_manifest_matches_the_checkout():

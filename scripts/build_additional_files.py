@@ -20,6 +20,17 @@ def read_csv(path: Path) -> list[list[str]]:
         return list(csv.reader(handle))
 
 
+def find_input(project: Path, package: Path, relative: Path) -> Path:
+    candidates = (
+        package / relative,
+        project / relative,
+    )
+    for candidate in candidates:
+        if candidate.exists() and candidate.stat().st_size > 0:
+            return candidate
+    raise SystemExit(f"missing additional-file input: {relative}")
+
+
 def write_workbook(
     output: Path,
     sheets: list[tuple[str, Path]],
@@ -108,33 +119,56 @@ def write_note(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-dir", required=True)
-    parser.add_argument("--package-dir", required=True)
-    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--package-dir", default=None)
+    parser.add_argument("--output-dir", default=None)
     args = parser.parse_args()
 
     project = Path(args.project_dir)
-    package = Path(args.package_dir)
-    output = Path(args.output_dir)
+    package = Path(args.package_dir) if args.package_dir else project / "docs"
+    output = (
+        Path(args.output_dir)
+        if args.output_dir
+        else project / "docs" / "additional_files"
+    )
     output.mkdir(parents=True, exist_ok=True)
 
     write_workbook(
         output / "Additional_file_1_species_panel.xlsx",
-        [("Species panel", package / "panels/table1_species_panel.csv")],
+        [(
+            "Species panel",
+            find_input(
+                project,
+                package,
+                Path("docs/paper_figures/table1_species_panel.csv"),
+            ),
+        )],
     )
     write_workbook(
         output / "Additional_file_2_level1_sub_scores.xlsx",
         [
             (
                 "ONT_frozen",
-                project / "results/framework/stats/reads_level1.csv",
+                find_input(
+                    project,
+                    package,
+                    Path("results/framework/stats/reads_level1.csv"),
+                ),
             ),
             (
                 "HiFi_10x",
-                project / "results/framework/stats/hifi_level1_10x.csv",
+                find_input(
+                    project,
+                    package,
+                    Path("results/framework/stats/hifi_level1_10x.csv"),
+                ),
             ),
             (
                 "HiFi_seed_deltas",
-                project / "results/framework/stats/hifi_crossplatform_seeds.csv",
+                find_input(
+                    project,
+                    package,
+                    Path("results/framework/stats/hifi_crossplatform_seeds.csv"),
+                ),
             ),
         ],
     )
@@ -143,12 +177,25 @@ def main() -> None:
         [
             (
                 "Decision",
-                package / "panels/gc_bins_claim_decision.csv",
+                find_input(
+                    project,
+                    package,
+                    Path(
+                        "docs/reproducibility/results_bundle/stats/"
+                        "gc_bins_claim_decision.csv"
+                    ),
+                ),
             ),
             (
                 "Seed_details",
-                project
-                / "results/stats/profile_matched_gc_bins_seed_details_20260916_010047.csv",
+                find_input(
+                    project,
+                    package,
+                    Path(
+                        "results/stats/"
+                        "profile_matched_gc_bins_seed_details_20260916_010047.csv"
+                    ),
+                ),
             ),
         ],
     )
@@ -157,11 +204,25 @@ def main() -> None:
         [
             (
                 "Decision",
-                package / "panels/delta_to_real_decision.csv",
+                find_input(
+                    project,
+                    package,
+                    Path(
+                        "docs/reproducibility/results_bundle/framework/stats/"
+                        "delta_to_real_decision.csv"
+                    ),
+                ),
             ),
             (
                 "Panel_30x",
-                package / "panels/delta_to_real_panel_30x.csv",
+                find_input(
+                    project,
+                    package,
+                    Path(
+                        "docs/reproducibility/results_bundle/framework/stats/"
+                        "delta_to_real_panel_30x.csv"
+                    ),
+                ),
             ),
         ],
     )

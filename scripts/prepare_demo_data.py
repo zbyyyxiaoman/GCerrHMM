@@ -11,11 +11,95 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
+import os
+import re
 import shutil
 import subprocess
 import sys
 import urllib.request
 from pathlib import Path
+
+from common_io import md5_file
+
+
+def parse_size(value: str) -> int:
+    match = re.fullmatch(r"\s*([0-9]+(?:\.[0-9]+)?)\s*([KMGT]?)(?:B)?\s*", value, re.I)
+    if not match:
+        raise ValueError(f"invalid size: {value!r}")
+    number = float(match.group(1))
+    suffix = match.group(2).upper()
+    scale = {"": 1, "K": 1 << 10, "M": 1 << 20, "G": 1 << 30, "T": 1 << 40}
+    return int(number * scale[suffix])
+
+
+def available_memory_bytes() -> int | None:
+    meminfo = Path("/proc/meminfo")
+    if meminfo.exists():
+        for line in meminfo.read_text(encoding="ascii").splitlines():
+            if line.startswith("MemAvailable:"):
+                kib = int(line.split()[1])
+                return kib * 1024
+    try:
+        pages = os.sysconf("SC_AVPHYS_PAGES")
+        page_size = os.sysconf("SC_PAGE_SIZE")
+        return int(pages) * int(page_size)
+    except (AttributeError, OSError, ValueError):
+        return None
+
+
+def select_sort_threads(
+    requested_threads: int,
+    sort_memory_bytes: int,
+    explicit_sort_threads: int | None = None,
+    available_bytes: int | None = None,
+) -> int:
+    maximum = max(1, int(requested_threads) - 1)
+    if explicit_sort_threads is not None:
+        return max(1, min(int(explicit_sort_threads), maximum))
+    available = (
+        available_bytes
+        if available_bytes is not None
+        else available_memory_bytes()
+    )
+    if available is None:
+        return min(maximum, 3)
+    memory_budget = max(sort_memory_bytes, int(available * 0.5))
+    return max(1, min(maximum, memory_budget // sort_memory_bytes))
+
+
+def check_free_space(project: Path, required_bytes: int) -> None:
+    free = shutil.disk_usage(project).free
+    if free < required_bytes:
+        raise SystemExit(
+            "insufficient free disk space: "
+            f"need {required_bytes / (1 << 30):.2f} GiB, "
+            f"available {free / (1 << 30):.2f} GiB under {project}"
+        )
+    print(
+        f"[space] free={free / (1 << 30):.2f} GiB "
+        f"required={required_bytes / (1 << 30):.2f} GiB"
+    )
+
+
+def gzip_complete(path: Path) -> bool:
+    try:
+        with gzip.open(path, "rb") as handle:
+            for _ in iter(lambda: handle.read(8 << 20), b""):
+                pass
+        return path.stat().st_size > 0
+    except (OSError, EOFError):
+        return False
+
+
+def archive_corrupt(path: Path) -> Path:
+    archive = path.with_name(path.name + ".corrupt")
+    index = 1
+    while archive.exists():
+        archive = path.with_name(f"{path.name}.corrupt.{index}")
+        index += 1
+    path.replace(archive)
+    print(f"[archive] corrupt input moved to {archive}")
+    return archive
 
 
 def download(url: str, destination: Path) -> None:
@@ -60,8 +144,20 @@ def prepare_fastq(
     item = config["species"][species]
     fastq = project / config["download_root"] / f"{species}_ont.fastq.gz"
     if fastq.exists() and fastq.stat().st_size > 0:
-        print(f"[skip] FASTQ exists: {fastq}")
-        return fastq
+        expected_size = item.get("fastq_size")
+        expected_md5 = item.get("fastq_md5")
+        valid = (
+            (expected_size is None or fastq.stat().st_size == expected_size)
+            and (
+                expected_md5 is None
+                or md5_file(fastq).lower() == expected_md5.lower()
+            )
+            and gzip_complete(fastq)
+        )
+        if valid:
+            print(f"[skip] verified FASTQ: {fastq}")
+            return fastq
+        archive_corrupt(fastq)
     command = [
         sys.executable,
         str(project / "scripts" / "download_verified_sources.py"),
@@ -89,6 +185,8 @@ def prepare_alignment(
     reference: Path,
     fastq: Path,
     threads: int,
+    sort_memory: str,
+    sort_threads: int | None,
 ) -> Path:
     bam = (
         project
@@ -96,25 +194,72 @@ def prepare_alignment(
         / "real_reads_verified"
         / f"{species}_ont_aligned.bam"
     )
-    if bam.exists() and bam.stat().st_size > 0:
-        print(f"[skip] BAM exists: {bam}")
-        return bam
     for tool in ("minimap2", "samtools"):
         if shutil.which(tool) is None:
             raise SystemExit(
                 f"missing {tool}; install the conda environment with "
                 "`conda env create -f environment.yml`"
             )
+    if bam.exists() and bam.stat().st_size > 0:
+        check = subprocess.run(
+            ["samtools", "quickcheck", "-v", str(bam)],
+            capture_output=True,
+            text=True,
+        )
+        if check.returncode == 0:
+            print(f"[skip] verified BAM: {bam}")
+            return bam
+        archive_corrupt(bam)
+        index = bam.with_suffix(bam.suffix + ".bai")
+        if index.exists():
+            archive_corrupt(index)
+
     threads = max(1, int(threads))
-    sort_threads = max(1, threads - 1)
-    bam.parent.mkdir(parents=True, exist_ok=True)
-    command = (
-        f"minimap2 -ax map-ont -t {threads} "
-        f"{reference} {fastq} | "
-        f"samtools sort -@ {sort_threads} -m 1G -o {bam} -"
+    sort_memory_bytes = parse_size(sort_memory)
+    sort_threads = select_sort_threads(
+        threads,
+        sort_memory_bytes,
+        explicit_sort_threads=sort_threads,
     )
-    print("[align] " + command)
-    subprocess.run(command, shell=True, check=True)
+    bam.parent.mkdir(parents=True, exist_ok=True)
+    print(
+        f"[align] minimap2 threads={threads}; "
+        f"samtools sort threads={sort_threads} memory={sort_memory}"
+    )
+    mapper = subprocess.Popen(
+        [
+            "minimap2",
+            "-ax",
+            "map-ont",
+            "-t",
+            str(threads),
+            str(reference),
+            str(fastq),
+        ],
+        stdout=subprocess.PIPE,
+    )
+    sorter = subprocess.Popen(
+        [
+            "samtools",
+            "sort",
+            "-@",
+            str(sort_threads),
+            "-m",
+            sort_memory,
+            "-o",
+            str(bam),
+            "-",
+        ],
+        stdin=mapper.stdout,
+    )
+    mapper.stdout.close()
+    sort_status = sorter.wait()
+    map_status = mapper.wait()
+    if map_status != 0 or sort_status != 0:
+        raise SystemExit(
+            f"alignment pipeline failed: minimap2={map_status}, "
+            f"samtools_sort={sort_status}"
+        )
     subprocess.run(["samtools", "index", str(bam)], check=True)
     return bam
 
@@ -128,6 +273,9 @@ def main() -> int:
     parser.add_argument("--chunk-size", type=int, default=16 << 20)
     parser.add_argument("--sra-tool", default=None)
     parser.add_argument("--sra-threads", type=int, default=8)
+    parser.add_argument("--sort-memory", default="1G")
+    parser.add_argument("--sort-threads", type=int, default=None)
+    parser.add_argument("--min-free-gb", type=float, default=None)
     args = parser.parse_args()
 
     project = Path(args.project_dir).resolve()
@@ -153,6 +301,18 @@ def main() -> int:
             "docs/panel_support.md for the panel-specific preparation."
         )
 
+    source_bytes = (
+        source_config["species"][args.species].get("sra_size")
+        or source_config["species"][args.species].get("fastq_size")
+        or 1 << 30
+    )
+    required_bytes = (
+        int(args.min_free_gb * (1 << 30))
+        if args.min_free_gb is not None
+        else int(source_bytes * 2 + (1 << 30))
+    )
+    check_free_space(project, required_bytes)
+
     reference = prepare_reference(
         project,
         species_config,
@@ -173,6 +333,8 @@ def main() -> int:
         reference,
         fastq,
         args.threads,
+        args.sort_memory,
+        args.sort_threads,
     )
     print("DEMO_DATA_READY")
     print(f"REFERENCE={reference}")

@@ -16,6 +16,11 @@ results/framework/tables/variant_real_ont30_Hsapiens_chr21.json
 results/framework/tables/assembly_flye_real_ont30_Hsapiens_chr21.json
 ```
 
+The public reviewer package ships these authoritative JSON files in
+`docs/reproducibility/results_bundle/framework/tables/`. `reproduce.sh`
+materialises that bundle into `results/` automatically for `--audit-panel`,
+`--framework-figures`, and `--delta-to-real`.
+
 The broader framework tables also contain chr21 `_alignment.json`,
 `_fair_v2.json`, and `_fair_v3.json` files. Those belong to the main
 cross-tool panel and are **not** the coverage-matched 30x decision panel.

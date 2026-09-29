@@ -30,13 +30,23 @@ run_gc_demo() {
 }
 
 prepare_demo_data() {
-    python3 "$ROOT/scripts/prepare_demo_data.py" \
+    local -a prepare_args
+    prepare_args=(
         --project-dir "$PROJECT_DIR" \
         --species "${SPECIES:-Ecoli}" \
         --threads "${THREADS:-16}" \
         --parts "${DOWNLOAD_PARTS:-8}" \
         --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}" \
         --sra-threads "${SRA_THREADS:-4}"
+        --sort-memory "${SORT_MEMORY:-1G}"
+    )
+    if [[ -n "${SORT_THREADS:-}" ]]; then
+        prepare_args+=(--sort-threads "$SORT_THREADS")
+    fi
+    if [[ -n "${MIN_FREE_GB:-}" ]]; then
+        prepare_args+=(--min-free-gb "$MIN_FREE_GB")
+    fi
+    python3 "$ROOT/scripts/prepare_demo_data.py" "${prepare_args[@]}"
 }
 
 run_fixture_demo() {
@@ -52,8 +62,23 @@ run_fixture_demo() {
         --output-dir "${FIXTURE_OUTPUT_DIR:-$ROOT/results/fixture_demo}"
 }
 
+check_bundled_results() {
+    python3 "$ROOT/scripts/install_bundled_results.py" \
+        --project-dir "$PROJECT_DIR" \
+        --bundle-dir "$ROOT/docs/reproducibility/results_bundle" \
+        --check-only
+}
+
+ensure_bundled_results() {
+    python3 "$ROOT/scripts/install_bundled_results.py" \
+        --project-dir "$PROJECT_DIR" \
+        --bundle-dir "$ROOT/docs/reproducibility/results_bundle" \
+        --quiet
+}
+
 case "$MODE" in
     --smoke)
+        check_bundled_results
         if command -v sha256sum >/dev/null 2>&1; then
             (cd "$ROOT" && sha256sum -c docs/reproducibility/checksums.sha256)
         else
@@ -62,6 +87,7 @@ case "$MODE" in
         echo "REPRODUCE_SMOKE_OK"
         ;;
     --r1)
+        ensure_bundled_results
         python3 "$ROOT/scripts/build_r1_level1_overall.py" --project-dir "$PROJECT_DIR"
         ;;
     --full-check)
@@ -94,6 +120,7 @@ case "$MODE" in
         run_fixture_demo
         ;;
     --framework-figures)
+        ensure_bundled_results
         python3 "$ROOT/scripts/export_framework_tables.py" \
             --project-dir "$PROJECT_DIR" \
             --output-dir "${OUTPUT_DIR:-$PROJECT_DIR/results/framework/stats}"
@@ -107,6 +134,7 @@ case "$MODE" in
             --project-dir "$PROJECT_DIR"
         ;;
     --delta-to-real)
+        ensure_bundled_results
         python3 "$ROOT/scripts/delta_to_real_decision.py" \
             --project-dir "$PROJECT_DIR" \
             --exclude-layer R4
@@ -116,6 +144,7 @@ case "$MODE" in
             --project-dir "$PROJECT_DIR"
         ;;
     --audit-panel)
+        ensure_bundled_results
         python3 "$ROOT/scripts/audit_panel_provenance.py" \
             --project-dir "$PROJECT_DIR"
         ;;
@@ -141,6 +170,16 @@ case "$MODE" in
         fi
         python3 "$ROOT/scripts/audit_hardcoded_paths.py" \
             "${path_args[@]}"
+        ;;
+    --install-results)
+        ensure_bundled_results
+        ;;
+    --additional-files)
+        ensure_bundled_results
+        python3 "$ROOT/scripts/build_additional_files.py" \
+            --project-dir "$PROJECT_DIR" \
+            --package-dir "$ROOT" \
+            --output-dir "${ADDITIONAL_OUTPUT_DIR:-$PROJECT_DIR/docs/additional_files}"
         ;;
     --help|-h)
         cat <<'EOF'
@@ -174,6 +213,10 @@ Usage: bash reproduce.sh [mode]
                 Summarise recent errors and integrity signals in logs.
   --audit-paths
                 Report non-portable absolute paths in code and scripts.
+  --install-results
+                Materialise the frozen public result bundle under results/.
+  --additional-files
+                Build Additional files 1-7 from the frozen result bundle.
 EOF
         ;;
     *)

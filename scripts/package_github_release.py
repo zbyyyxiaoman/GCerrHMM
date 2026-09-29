@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import re
 import shutil
+import subprocess
+import sys
 import zipfile
 from pathlib import Path
 
@@ -53,6 +55,7 @@ CORE_SCRIPTS = [
     "build_figure_contact_sheet.py",
     "build_gcerrhmm_main_figures.py",
     "build_r1_level1_overall.py",
+    "build_results_bundle.py",
     "build_teacher_framework_figures.py",
     "build_v2_layer_summary.py",
     "build_w3_review_copy.py",
@@ -72,6 +75,7 @@ CORE_SCRIPTS = [
     "figure_io.py",
     "gc_error_fidelity.py",
     "innovation_postanalysis.py",
+    "install_bundled_results.py",
     "package_github_release.py",
     "plot_gc_error_curve.py",
     "pooled_gc_curve.py",
@@ -130,6 +134,22 @@ MANUSCRIPT_FILES = [
     "author_metadata.template.json",
 ]
 
+SUPPORT_DATA_FILES = [
+    ("docs/paper_figures/table1_species_panel.csv",
+     "docs/paper_figures/table1_species_panel.csv"),
+    ("docs/paper_innovation/stats/kmer_pca.csv",
+     "docs/paper_innovation/stats/kmer_pca.csv"),
+]
+
+MODEL_FILES = [
+    "Athaliana_errhmm.json",
+    "Dmelanogaster_errhmm.json",
+    "Ecoli_errhmm.json",
+    "Hsapiens_chr21_errhmm.json",
+    "Mmusculus_chr19_errhmm.json",
+    "Scerevisiae_errhmm.json",
+]
+
 TEXT_SUFFIXES = {
     ".cff",
     ".cfg",
@@ -157,18 +177,26 @@ PORTABLE_REPLACEMENTS = (
     (re.compile(r"\bbmc_project\b"), "project"),
 )
 
-PRIVATE_USER_MARKERS = (
-    b"27" + b"947",
-    b"bob" + b"by",
+PRIVATE_USER = "27" + "947"
+PRIVATE_USER_BYTES = PRIVATE_USER.encode("ascii")
+
+PRIVATE_TEXT_PATTERNS = (
+    re.compile(r"/mnt/c/Users/" + PRIVATE_USER + r"(?:/|$)"),
+    re.compile(r"[A-Za-z]:[\\/]Users[\\/]" + PRIVATE_USER + r"(?:[\\/]|$)"),
+    re.compile(r"/home/" + ("bob" + "by") + r"(?:/|$)"),
+    re.compile(r"/home/" + ("z" + "by") + r"(?:/|$)"),
+    re.compile(r"\b[\w.-]+@10\.70\.5\.64\b"),
+    re.compile(r"\b10\.70\.5\.64\b"),
+    re.compile(r"Desktop[\\/]bmc_" + r"project(?:[\\/]|$)"),
 )
 
-PRIVATE_PATH_MARKERS = (
-    b"27" + b"947",
-    (b"10." + b"70.5.64"),
-    b"/home/" + b"bob" + b"by",
-    b"/home/" + b"z" + b"by",
-    b"C:\\Users\\" + b"27" + b"947",
-    b"/mnt/c/Users/" + b"27" + b"947",
+PRIVATE_BINARY_MARKERS = (
+    PRIVATE_USER_BYTES,
+    b"<remote-host>",
+    b"/home/" + ("bob" + "by").encode("ascii"),
+    b"/home/" + ("z" + "by").encode("ascii"),
+    b"C:\\Users\\" + PRIVATE_USER_BYTES,
+    b"/mnt/c/Users/" + PRIVATE_USER_BYTES,
     b"Desktop/bmc_" + b"project",
 )
 
@@ -203,17 +231,25 @@ def scan_private_markers(root: Path) -> list[str]:
         if not path.is_file():
             continue
         payload = path.read_bytes()
-        markers = (
-            PRIVATE_USER_MARKERS
-            if path.suffix.lower() in TEXT_SUFFIXES
-            else PRIVATE_PATH_MARKERS
-        )
-        for marker in markers:
-            if marker in payload:
-                findings.append(
-                    f"{path.relative_to(root).as_posix()}: {marker.decode()}"
-                )
-                break
+        if path.suffix.lower() in TEXT_SUFFIXES:
+            try:
+                text = payload.decode("utf-8")
+            except UnicodeDecodeError:
+                text = payload.decode("gb18030")
+            for pattern in PRIVATE_TEXT_PATTERNS:
+                if pattern.search(text):
+                    findings.append(
+                        f"{path.relative_to(root).as_posix()}: {pattern.pattern}"
+                    )
+                    break
+        else:
+            for marker in PRIVATE_BINARY_MARKERS:
+                if marker in payload:
+                    findings.append(
+                        f"{path.relative_to(root).as_posix()}: "
+                        f"{marker.decode(errors='replace')}"
+                    )
+                    break
     return findings
 
 
@@ -270,6 +306,22 @@ def main() -> None:
 
     for filename in DOCS:
         copy_portable(source / "docs" / filename, staging / "docs" / filename)
+
+    bundle_source = source / "docs" / "reproducibility" / "results_bundle"
+    bundle_staging = staging / "docs" / "reproducibility" / "results_bundle"
+    if bundle_source.exists():
+        for path in sorted(bundle_source.rglob("*")):
+            if path.is_file():
+                copy_portable(
+                    path,
+                    bundle_staging / path.relative_to(bundle_source),
+                )
+    bundle_zip = source / "docs" / "reproducibility" / "results_bundle.zip"
+    if bundle_zip.exists():
+        copy_portable(
+            bundle_zip,
+            staging / "docs" / "reproducibility" / "results_bundle.zip",
+        )
     for filename in REPRODUCIBILITY_FILES:
         copy_portable(
             source / "docs" / "reproducibility" / filename,
@@ -281,8 +333,20 @@ def main() -> None:
             staging / "docs" / "manuscript" / filename,
         )
 
+    for source_name, destination_name in SUPPORT_DATA_FILES:
+        copy_portable(
+            source / source_name,
+            staging / destination_name,
+        )
+    for filename in MODEL_FILES:
+        copy_portable(
+            source / "data" / "trained_models" / filename,
+            staging / "data" / "trained_models" / filename,
+        )
+
     for directory in (
         "docs/background_figures",
+        "docs/additional_files",
         "docs/gcerrhmm_main_figures_refined_20260927_v2",
     ):
         for path in sorted((source / directory).glob("*")):
@@ -292,6 +356,18 @@ def main() -> None:
     for path in sorted(staging.rglob("__pycache__"), reverse=True):
         if path.is_dir():
             shutil.rmtree(path)
+
+    subprocess.run(
+        [
+            sys.executable,
+            str(staging / "scripts" / "install_bundled_results.py"),
+            "--project-dir",
+            str(staging),
+            "--bundle-dir",
+            str(bundle_staging),
+        ],
+        check=True,
+    )
 
     findings = scan_private_markers(staging)
     if findings:

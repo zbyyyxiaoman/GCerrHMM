@@ -18,6 +18,7 @@ PATTERNS = {
 
 EXCLUDED = {
     "scripts/audit_hardcoded_paths.py",
+    "scripts/build_results_bundle.py",
     "scripts/package_github_release.py",
 }
 
