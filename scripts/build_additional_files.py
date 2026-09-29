@@ -180,10 +180,7 @@ def main() -> None:
                 find_input(
                     project,
                     package,
-                    Path(
-                        "docs/reproducibility/results_bundle/stats/"
-                        "gc_bins_claim_decision.csv"
-                    ),
+                    Path("results/stats/gc_bins_claim_decision.csv"),
                 ),
             ),
             (
@@ -208,8 +205,7 @@ def main() -> None:
                     project,
                     package,
                     Path(
-                        "docs/reproducibility/results_bundle/framework/stats/"
-                        "delta_to_real_decision.csv"
+                        "results/framework/stats/delta_to_real_decision.csv"
                     ),
                 ),
             ),
@@ -219,8 +215,7 @@ def main() -> None:
                     project,
                     package,
                     Path(
-                        "docs/reproducibility/results_bundle/framework/stats/"
-                        "delta_to_real_panel_30x.csv"
+                        "results/framework/stats/delta_to_real_panel_30x.csv"
                     ),
                 ),
             ),
