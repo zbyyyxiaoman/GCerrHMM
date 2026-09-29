@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gcerrhmm"
-version = "1.0.1"
+version = "1.0.3"
 description = "GC-aware error HMM and reproducibility harness for long-read sequencing simulation"
 readme = "README.md"
 requires-python = ">=3.10"

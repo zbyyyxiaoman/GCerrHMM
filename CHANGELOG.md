@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2026-09-29
+
+- Archived the release on Zenodo with DOI `10.5281/zenodo.23034362`.
+- Added the DOI to the software citation and repository metadata.
+
 ## 1.0.1 - 2026-09-29
 
 - Added the confirmed author and affiliation metadata.

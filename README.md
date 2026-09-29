@@ -242,8 +242,8 @@ Authors:
 * Tao Jiang, Faculty of Computing, Harbin Institute of Technology
   (corresponding author).
 
-The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the Zenodo
-DOI is filled after archival release.
+The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the archived
+release DOI is `10.5281/zenodo.23034362`.
 
 ## Licence
 
