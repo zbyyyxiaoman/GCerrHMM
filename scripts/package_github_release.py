@@ -244,6 +244,14 @@ def main() -> None:
         copy_portable(path, staging / "src" / path.name)
     for path in sorted((source / "tests").glob("*.py")):
         copy_portable(path, staging / "tests" / path.name)
+    for path in sorted((source / "tests" / "fixtures").rglob("*")):
+        if path.is_file():
+            copy_portable(
+                path,
+                staging / "tests" / "fixtures" / path.relative_to(
+                    source / "tests" / "fixtures"
+                ),
+            )
     for path in sorted((source / "config").glob("*.json")):
         copy_portable(path, staging / "config" / path.name)
     for path in sorted((source / "config" / "read_profiles").glob("*.json")):

@@ -88,6 +88,13 @@ launcher.
 
 ### 3. Run the fastest end-to-end algorithmic check
 
+For a completely offline, tiny synthetic fixture that generates the table in
+seconds:
+
+```bash
+bash reproduce.sh --fixture-demo
+```
+
 For an end-to-end check from public data, use one command:
 
 ```bash
@@ -174,6 +181,7 @@ refuse to continue on a checksum mismatch.
 | `bash reproduce.sh --tests` | Run the dependency-light unit tests. |
 | `bash reproduce.sh --static-check` | Compile Python files and syntax-check the shell launcher. |
 | `bash reproduce.sh --quick-demo` | Fast deterministic one-species train/simulate/evaluate chain. |
+| `bash reproduce.sh --fixture-demo` | Run the tiny offline synthetic fixture and generate the small table. |
 | `bash reproduce.sh --prepare-demo` | Download one species reference/FASTQ and build its aligned BAM. |
 | `bash reproduce.sh --quick-reproduce` | Prepare missing demo data, then run `--quick-demo`. |
 | `bash reproduce.sh --gc-demo` | Publication-scale 10x train/simulate/evaluate chain. |

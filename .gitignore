@@ -5,8 +5,12 @@ logs/
 .codex/
 .cache/
 *.bam
+!tests/fixtures/**/*.bam
+!tests/fixtures/**/*.bai
 *.fastq
 *.fastq.gz
+!tests/fixtures/**/*.fastq
+!tests/fixtures/**/*.fastq.gz
 *.cereal
 __pycache__/
 tmp/

@@ -38,6 +38,19 @@ prepare_demo_data() {
         --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}"
 }
 
+run_fixture_demo() {
+    python3 "$ROOT/scripts/reproduce_gc_improvement.py" \
+        --project-dir "$ROOT/tests/fixtures/tiny_demo" \
+        --repo-dir "$ROOT" \
+        --species Ecoli \
+        --profile-json "$ROOT/tests/fixtures/tiny_demo/data/tmp/read_profiles/Ecoli.json" \
+        --coverage "${FIXTURE_COVERAGE:-1}" \
+        --seed "${SEED:-42}" \
+        --threads "${THREADS:-16}" \
+        --jobs "${JOBS:-3}" \
+        --output-dir "${FIXTURE_OUTPUT_DIR:-$ROOT/results/fixture_demo}"
+}
+
 case "$MODE" in
     --smoke)
         if command -v sha256sum >/dev/null 2>&1; then
@@ -75,6 +88,9 @@ case "$MODE" in
     --quick-reproduce)
         prepare_demo_data
         run_gc_demo quick
+        ;;
+    --fixture-demo)
+        run_fixture_demo
         ;;
     --framework-figures)
         python3 "$ROOT/scripts/export_framework_tables.py" \
@@ -141,6 +157,8 @@ Usage: bash reproduce.sh [mode]
                 Download one species reference/FASTQ and build its aligned BAM.
   --quick-reproduce
                 Prepare missing demo data, then run --quick-demo.
+  --fixture-demo
+                Run the tiny offline fixture without downloading public data.
   --framework-figures
                 Rebuild the teacher-framework summary tables and figures.
   --delta-to-real

@@ -62,6 +62,18 @@ def test_release_script_manifest_matches_the_checkout():
     assert not missing
 
 
+def test_tiny_fixture_is_present():
+    fixture = ROOT / "tests" / "fixtures" / "tiny_demo" / "data"
+    for relative in (
+        "references/Ecoli_ref.fa",
+        "real_reads_verified/Ecoli_ont.fastq.gz",
+        "real_reads_verified/Ecoli_ont_aligned.bam",
+        "real_reads_verified/Ecoli_ont_aligned.bam.bai",
+    ):
+        path = fixture / relative
+        assert path.exists() and path.stat().st_size > 0
+
+
 def test_sha256_file_reads_in_blocks():
     with tempfile.TemporaryDirectory() as directory:
         path = Path(directory) / "payload.bin"

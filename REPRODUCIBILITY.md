@@ -52,6 +52,13 @@ checkout should use `--smoke`, `--tests` and `--static-check` instead.
 
 ## Core algorithmic improvement reproduction
 
+For a fully offline synthetic smoke run that writes the small three-route
+table without downloading public data:
+
+```bash
+bash reproduce.sh --fixture-demo
+```
+
 The central algorithmic claim is not a static figure. It is the
 GC-conditioned transition model learned from a real aligned BAM. The
 one-command reproduction loop trains both the GC-aware model and the

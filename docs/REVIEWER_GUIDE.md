@@ -29,6 +29,15 @@ archives against `docs/reproducibility/checksums.sha256`.
 
 ## Tier 1: run the algorithmic smoke chain
 
+For the fastest offline check, run:
+
+```bash
+bash reproduce.sh --fixture-demo
+```
+
+This uses a tiny synthetic reference/FASTQ/BAM fixture under
+`tests/fixtures/tiny_demo/`; it does not download any public data.
+
 This is the fastest end-to-end test of the method itself. It retrains the
 GC-aware model and its one-bin control from one real BAM, simulates three
 matched routes, and evaluates all three with the Level-1 metrics.

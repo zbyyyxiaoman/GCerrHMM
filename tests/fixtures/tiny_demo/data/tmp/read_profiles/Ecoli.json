@@ -1,0 +1,25 @@
+{
+  "species": "Ecoli",
+  "accession": "synthetic_fixture",
+  "source_fastq": "synthetic",
+  "source_reads": 120,
+  "sampled_reads": 120,
+  "sampling": "deterministic_fixture",
+  "read_length": {
+    "mean": 10000,
+    "median": 10000,
+    "std": 500,
+    "quantiles": [
+      9000,
+      9500,
+      10000,
+      10500,
+      11000
+    ]
+  },
+  "qv": {
+    "mean": 25.0,
+    "median": 25.0,
+    "std": 3.0
+  }
+}
