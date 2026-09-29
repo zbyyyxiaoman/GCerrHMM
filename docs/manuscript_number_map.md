@@ -8,15 +8,15 @@ each item. It is a provenance index, not a replacement for the frozen files.
 
 | Manuscript item | Primary artifact | Generator / source | Reviewer command |
 |---|---|---|---|
-| Fig. 1 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure1_overview_innovation.*` | `scripts/build_gcerrhmm_main_figures.py` | `bash reproduce.sh --framework-figures` |
-| Fig. 2 | background figure set in `docs/background_figures/` | `scripts/build_background_figures.py` | `bash reproduce.sh --framework-figures` |
-| Fig. 3 | `docs/figures_supplementary/figS_dup_ambiguity.*` | supplementary figure builder | inspect frozen artifact / `--smoke` |
-| Fig. 4 | `figure1_overview_innovation.*` | main-figure builder | `--framework-figures` |
-| Fig. 5 | `figure2_reads_cross_tool.*` | main-figure builder | `--framework-figures` |
-| Fig. 6 | `figure3_alignment.*` | main-figure builder | `--framework-figures` |
-| Fig. 7 | `figure4_variant_calling.*` | main-figure builder | `--framework-figures` |
-| Fig. 8 | `figure5_assembly_phasing.*` | main-figure builder | `--framework-figures` |
-| Fig. 9 | `figure6_ablation.*` | main-figure builder | `--framework-figures` |
+| Fig. 1 | `docs/background_figures/background_figure_b1_gc_context.*` | `scripts/build_background_figures.py` | `bash reproduce.sh --framework-figures` |
+| Fig. 2 | `docs/background_figures/background_figure_b2_simulator_landscape.*` | `scripts/build_background_figures.py` | `bash reproduce.sh --framework-figures` |
+| Fig. 3 | `docs/background_figures/background_figure_b3_context_layers.*` | `scripts/build_background_figures.py` | `bash reproduce.sh --framework-figures` |
+| Fig. 4 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure1_overview_innovation.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
+| Fig. 5 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure2_reads_cross_tool.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
+| Fig. 6 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure3_alignment.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
+| Fig. 7 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure4_variant_calling.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
+| Fig. 8 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure5_assembly_phasing.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
+| Fig. 9 | `docs/gcerrhmm_main_figures_refined_20260927_v2/figure6_ablation.*` | `scripts/build_gcerrhmm_main_figures.py` | `--framework-figures` |
 
 The frozen figure archives are checked by:
 
