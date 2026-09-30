@@ -317,10 +317,11 @@ Authors:
 * Tao Jiang, Faculty of Computing, Harbin Institute of Technology
   (corresponding author).
 
-The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the archived
-release DOI is `10.5281/zenodo.23034362`.
+The repository URL is `https://github.com/zbyyyxiaoman/GCerrHMM`; the
+version-stable Zenodo concept DOI is `10.5281/zenodo.23034361`, which resolves
+to the latest deposited release.
 
-The complete code and fixture ZIP is attached to the GitHub `v1.0.3` release.
+The complete code and fixture ZIP is attached to the GitHub `v1.0.4` release.
 The Zenodo record contains the citation metadata, README and release manifest.
 The large sequencing inputs are downloaded through the configured accessions
 and `scripts/prepare_demo_data.py`.

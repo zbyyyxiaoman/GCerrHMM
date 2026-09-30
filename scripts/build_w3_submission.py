@@ -207,6 +207,25 @@ def revise_scientific_text(document: Document) -> None:
     """Apply W3.1 corrections justified by code, data and pre-registration."""
     replace_prefix(
         document,
+        "Repository URL and Zenodo DOI are author-controlled",
+        (
+            "Repository URL: https://github.com/zbyyyxiaoman/GCerrHMM. "
+            "Version-stable Zenodo concept DOI: 10.5281/zenodo.23034361."
+        ),
+    )
+    replace_prefix(
+        document,
+        "Availability of data and materials:",
+        (
+            "Availability of data and materials: The code and frozen result "
+            "tables are available at "
+            "https://github.com/zbyyyxiaoman/GCerrHMM, with version-stable "
+            "Zenodo concept DOI 10.5281/zenodo.23034361. Public accessions "
+            "are listed in Table 1."
+        ),
+    )
+    replace_prefix(
+        document,
         "With a single insertion state",
         (
             "With a single insertion state, a one-base and a fifty-base "

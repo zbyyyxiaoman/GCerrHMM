@@ -173,11 +173,11 @@ Alignment: simulated and real reads are aligned with the same mapper and setting
 Two ablation axes were pre-registered. GC-bin granularity: K in {1, 5, 10, 20} with profile-matched training and three seeds per setting, evaluated on both the composite and the GC-stratified instrument; the pre-registered gate defines the scope of the cross-species significance claim. Training coverage: matched panels across a coverage grid, evaluated on the composite. The observed effects are reported with effect sizes and the measurement budget.
 [Heading 2] Statistical analysis and reproducibility
 Replicates differ only in random seed. Paired bootstrap intervals resample read indices once and reuse them for both routes. Uncertainty in the GC-fidelity instrument is decomposed into a read-sampling component (disjoint subsamples of a pooled 30x simulation) and a between-window bootstrap component; only the former is read as a power statement. Every simulation feeding a table or figure passes a fail-loud gate: an entry check refuses to start without a read-length and quality profile, and an exit check recomputes produced read count, total bases and mean read length against the request (coverage x reference length, profile mean) with 10% tolerance; violations abort the run before downstream consumption. Expected-unattended jobs are supervised and restarted on silent failure. The repository provides reproduce.sh with --gc-demo (retraining and matched simulation) and --framework-figures (evaluation tables and figure suite).
-Repository URL and Zenodo DOI are author-controlled release fields and must be supplied after deposition. Wall-clock runtimes are machine-dependent and are recorded in the reproducibility audit accompanying the release.
+Repository URL: https://github.com/zbyyyxiaoman/GCerrHMM. Version-stable Zenodo concept DOI: 10.5281/zenodo.23034361.
 [Heading 1] Declarations
 Ethics approval and consent to participate: Not applicable.
 Consent for publication: Not applicable.
-Availability of data and materials: [Repository URL and Zenodo DOI to be supplied after deposition]. Public accessions are listed in Table 1.
+Availability of data and materials: The code and frozen result tables are available at https://github.com/zbyyyxiaoman/GCerrHMM, with version-stable Zenodo concept DOI 10.5281/zenodo.23034361. Public accessions are listed in Table 1.
 Competing interests: [AUTHOR INPUT REQUIRED].
 Funding: [AUTHOR INPUT REQUIRED: grant numbers or 'none'].
 Authors' contributions: [AUTHOR INPUT REQUIRED: CRediT roles].

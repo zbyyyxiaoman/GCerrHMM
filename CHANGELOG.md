@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.4 - 2026-09-30
+
+- Added the checked 508-file public result bundle and automatic result
+  materialisation for table and figure commands.
+- Added memory-aware `samtools sort`, disk-space preflight and cached-input
+  integrity checks to the public quick-reproduction path.
+- Added deterministic Additional files 1-7.
+- Added W3.4, which resolves the chr21 insertion-rate provenance mismatch and
+  records the version-stable Zenodo concept DOI.
+
 ## 1.0.3 - 2026-09-29
 
 - Archived the release on Zenodo with DOI `10.5281/zenodo.23034362`.
