@@ -1,5 +1,10 @@
 # Manuscript source status
 
+Current submission file:
+`docs/manuscript/GCerrHMM_BMC_Research_article_W3.4_submission_20260930.docx`
+with its rendered PDF and figure set in the same directory. W3.3 and earlier
+files remain archived for provenance only.
+
 The current writing skeleton is
 `docs/manuscript/GCerrHMM_论文骨架_W1.3.1.docx` during the active writing
 sprint. Its text extraction is `docs/manuscript/w1_3_1_extract.txt`, and its
