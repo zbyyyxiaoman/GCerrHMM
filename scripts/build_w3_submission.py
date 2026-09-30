@@ -1094,18 +1094,18 @@ def convert_additional_files(document: Document) -> None:
         ),
         "Supplementary Table S5": (
             "Additional file 5. File name: Additional_file_5_instrument_audit"
-            ".pdf. File format: PDF/DOCX. Title: Instrument audit. "
+            ".docx. File format: PDF/DOCX. Title: Instrument audit. "
             "Description: four measurement problems, symptoms and fixes."
         ),
         "Supplementary Note 1": (
             "Additional file 6. File name: Additional_file_6_uncertainty_layers"
-            ".pdf. File format: PDF/DOCX. Title: Two layers of uncertainty. "
+            ".docx. File format: PDF/DOCX. Title: Two layers of uncertainty. "
             "Description: read-sampling and between-window components of "
             "the GC-fidelity instrument."
         ),
         "Supplementary Note 2": (
             "Additional file 7. File name: Additional_file_7_hifi_crossplatform"
-            "_note.pdf. File format: PDF/DOCX. Title: HiFi cross-platform "
+            "_note.docx. File format: PDF/DOCX. Title: HiFi cross-platform "
             "note. Description: cross-platform chain and the encoding-limited "
             "QV caveat."
         ),

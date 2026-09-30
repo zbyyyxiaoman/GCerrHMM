@@ -214,6 +214,6 @@ Additional file 1. File name: Additional_file_1_species_panel.xlsx. File format:
 Additional file 2. File name: Additional_file_2_level1_sub_scores.xlsx. File format: XLSX. Title: Full per-species Level-1 sub-scores and HiFi cross-platform scores. Description: replicate-level read-length, QV, GC and k-mer scores.
 Additional file 3. File name: Additional_file_3_gc_bin_ablation.xlsx. File format: XLSX. Title: GC-bin ablation full table. Description: curve r and MAD by species, bin setting and seed.
 Additional file 4. File name: Additional_file_4_delta_to_real.xlsx. File format: XLSX. Title: Delta-to-real per-tool table. Description: anchored-layer metrics and ranks.
-Additional file 5. File name: Additional_file_5_instrument_audit.pdf. File format: PDF/DOCX. Title: Instrument audit. Description: four measurement problems, symptoms and fixes.
-Additional file 6. File name: Additional_file_6_uncertainty_layers.pdf. File format: PDF/DOCX. Title: Two layers of uncertainty. Description: read-sampling and between-window components of the GC-fidelity instrument.
-Additional file 7. File name: Additional_file_7_hifi_crossplatform_note.pdf. File format: PDF/DOCX. Title: HiFi cross-platform note. Description: cross-platform chain and the encoding-limited QV caveat.
+Additional file 5. File name: Additional_file_5_instrument_audit.docx. File format: PDF/DOCX. Title: Instrument audit. Description: four measurement problems, symptoms and fixes.
+Additional file 6. File name: Additional_file_6_uncertainty_layers.docx. File format: PDF/DOCX. Title: Two layers of uncertainty. Description: read-sampling and between-window components of the GC-fidelity instrument.
+Additional file 7. File name: Additional_file_7_hifi_crossplatform_note.docx. File format: PDF/DOCX. Title: HiFi cross-platform note. Description: cross-platform chain and the encoding-limited QV caveat.
