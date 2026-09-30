@@ -123,10 +123,16 @@ REPRODUCIBILITY_FILES = [
 
 MANUSCRIPT_FILES = [
     "AUTHOR_INPUT_REQUIRED.md",
+    "README.md",
     "GCerrHMM_BMC_Research_article_W3.3_review_with_figures_20260929.pdf",
     "GCerrHMM_BMC_Research_article_W3.3_submission_20260929.pdf",
+    "GCerrHMM_BMC_Research_article_W3.4_submission_20260930.docx",
+    "GCerrHMM_BMC_Research_article_W3.4_submission_20260930.pdf",
+    "GCerrHMM_BMC_Research_article_W3.4_submission_20260930_extract.txt",
     "GCerrHMM_Chinese_figure_abstract_W3.3_20260929.pdf",
     "GCerrHMM_Chinese_full_manuscript_W3.3_20260929.pdf",
+    "GCerrHMM_Chinese_full_W3.4_20260930.docx",
+    "GCerrHMM_Chinese_full_W3.4_20260930.pdf",
     "W3.2_review_response.md",
     "W3.3_figures_contact_sheet.png",
     "W3_reference_audit.md",
@@ -348,6 +354,7 @@ def main() -> None:
         "docs/background_figures",
         "docs/additional_files",
         "docs/gcerrhmm_main_figures_refined_20260927_v2",
+        "docs/manuscript/W3.4_submission_figures",
     ):
         for path in sorted((source / directory).glob("*")):
             if path.is_file():

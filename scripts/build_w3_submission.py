@@ -207,6 +207,45 @@ def revise_scientific_text(document: Document) -> None:
     """Apply W3.1 corrections justified by code, data and pre-registration."""
     replace_prefix(
         document,
+        "With a single insertion state",
+        (
+            "With a single insertion state, a one-base and a fifty-base "
+            "insertion collapse to the same state, the I-to-I transition is "
+            "never observed, and the learned model emits every insertion as "
+            "exactly 1 bp. On the human chr21 training alignment the mean "
+            "insertion length is 3.83 bp, and the single-state encoding "
+            "produces 0.04% inserted bases against 3.78% under the same "
+            "CIGAR-derived M-base denominator. The run-length encoding "
+            "(I1-I3, I4+; D1-D3, D4+, with a heavy-tailed length distribution "
+            "for the 4+ states) moves simulated chr21 reads from 0.04% to "
+            "2.54% inserted bases and from a fixed 1.00 bp to 2.83 bp mean "
+            "insertion length, and raises the total error rate from 6.5% to "
+            "8.8% against a real 14.5%. As a single-variable ablation on "
+            "E. coli, the encoding improves the reads-level composite from "
+            "83.5 to 87.6, driven by a 16-point gain in the k-mer sub-score. "
+            "The residual gap to real data is concentrated in deletion run "
+            "length and in read segments that alignment-based training "
+            "cannot observe."
+        ),
+    )
+    replace_prefix(
+        document,
+        "Indel run length is carried",
+        (
+            "Indel run length is carried in the state name, for insertions "
+            "and deletions alike. A run of one, two or three bases enters "
+            "I1/I2/I3 or D1/D2/D3; longer runs share I4+/D4+, whose length "
+            "distribution is learned separately and is heavy-tailed. Among "
+            "chr21 insertion runs of 4 bp or more, 35% are exactly 4 bp, 52% "
+            "are 5-9 bp, 10% are 10-49 bp and 3.5% are at least 50 bp, with "
+            "a mean of about 241 bp in that final tail. With a single I state "
+            "the I-to-I transition is never observed and the model emits "
+            "every insertion as exactly 1 bp; the quantitative consequences "
+            "are reported in Results."
+        ),
+    )
+    replace_prefix(
+        document,
         "We present GCerrHMM",
         (
             "We present GCerrHMM, a transition-based error HMM trained on "
