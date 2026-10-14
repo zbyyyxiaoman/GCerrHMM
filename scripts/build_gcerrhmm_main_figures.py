@@ -496,7 +496,7 @@ def figure5(output_dir, project_dir):
         payload = json.loads(phasing_results[0].read_text(encoding="utf-8"))
         stats = payload.get("phase_stats", {})
         lines = [
-            ("Phasing (real HiFi, whatshap)", "", True),
+            ("Phasing (real HiFi, WhatsHap)", "", True),
             ("Sample / platform",
              f"{payload.get('sample', 'NA')} / {payload.get('platform', 'NA')}", False),
             ("Mapping rate", payload.get("mapping_rate", "NA"), False),
@@ -520,7 +520,7 @@ def figure5(output_dir, project_dir):
         axes[2].text(0.02, 0.92, "Assembly and phasing scope", ha="left", va="top", fontsize=10, fontweight="bold")
         axes[2].text(0.02, 0.76, "HiFi: hifiasm (primary)", ha="left", va="top", fontsize=9)
         axes[2].text(0.02, 0.62, "ONT: Flye (primary)", ha="left", va="top", fontsize=9)
-        axes[2].text(0.02, 0.48, "Phasing: whatshap, diploid truth required", ha="left", va="top", fontsize=9)
+        axes[2].text(0.02, 0.48, "Phasing: WhatsHap, diploid truth required", ha="left", va="top", fontsize=9)
         axes[2].text(0.02, 0.34, "Current legacy values are kept only as provenance.", ha="left", va="top", fontsize=8)
     fig.suptitle(
         "Figure 5. Assembly (Flye for ONT, hifiasm for HiFi) and phasing",

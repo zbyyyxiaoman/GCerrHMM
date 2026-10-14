@@ -574,7 +574,13 @@ def main():
              'total bases and read count from the requested profile.',
     )
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--threads', type=int, default=1)
+    parser.add_argument(
+        '--threads', '--workers',
+        dest='threads',
+        type=int,
+        default=1,
+        help='Number of process workers (legacy alias: --threads).',
+    )
 
     args = parser.parse_args()
 

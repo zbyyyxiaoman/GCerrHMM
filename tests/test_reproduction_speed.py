@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from common_io import sha256_file  # noqa: E402
+from benchmark_resource_usage import parse_time  # noqa: E402
 from package_github_release import CORE_SCRIPTS  # noqa: E402
 from reproduce_gc_improvement import (  # noqa: E402
     allocate_threads,
@@ -106,6 +107,17 @@ def test_tiny_fixture_is_present():
         assert path.exists() and path.stat().st_size > 0
 
 
+def test_prepare_demo_arguments_form_one_command():
+    text = (ROOT / "reproduce.sh").read_text(encoding="utf-8")
+    block = text.split("prepare_args=(", 1)[1].split(")", 1)[0]
+    lines = [line.strip() for line in block.splitlines() if line.strip()]
+    for previous, current in zip(lines, lines[1:]):
+        if current.startswith("--"):
+            assert previous.endswith("\\"), (
+                "a long option in prepare_args is missing a shell continuation"
+            )
+
+
 def test_sha256_file_reads_in_blocks():
     with tempfile.TemporaryDirectory() as directory:
         path = Path(directory) / "payload.bin"
@@ -114,3 +126,20 @@ def test_sha256_file_reads_in_blocks():
             "ba7816bf8f01cfea414140de5dae2223"
             "b00361a396177a9cb410ff61f20015ad"
         )
+
+
+def test_gnu_time_parser_handles_short_and_long_formats():
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "time.txt"
+        path.write_text(
+            "Elapsed (wall clock) time (h:mm:ss or m:ss): 0:29.56\n"
+            "Maximum resident set size (kbytes): 1024\n",
+            encoding="utf-8",
+        )
+        assert parse_time(path) == (29.56, 1.0)
+        path.write_text(
+            "Elapsed (wall clock) time (h:mm:ss or m:ss): 1:02:03.5\n"
+            "Maximum resident set size (kbytes): 2048\n",
+            encoding="utf-8",
+        )
+        assert parse_time(path) == (3723.5, 2.0)

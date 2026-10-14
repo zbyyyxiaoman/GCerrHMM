@@ -4,6 +4,11 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="${PROJECT_DIR:-$ROOT}"
 MODE="${1:---smoke}"
+# `THREADS` is the legacy name. The value is a process-worker budget for the
+# simulator and a thread budget for external tools; `WORKERS` is the clearer
+# public spelling.
+THREADS="${WORKERS:-${THREADS:-16}}"
+export THREADS
 
 run_gc_demo() {
     local profile="${1:-full}"
@@ -37,7 +42,7 @@ prepare_demo_data() {
         --threads "${THREADS:-16}" \
         --parts "${DOWNLOAD_PARTS:-8}" \
         --chunk-size "${DOWNLOAD_CHUNK_SIZE:-16777216}" \
-        --sra-threads "${SRA_THREADS:-4}"
+        --sra-threads "${SRA_THREADS:-4}" \
         --sort-memory "${SORT_MEMORY:-1G}"
     )
     if [[ -n "${SORT_THREADS:-}" ]]; then
@@ -217,6 +222,11 @@ Usage: bash reproduce.sh [mode]
                 Materialise the frozen public result bundle under results/.
   --additional-files
                 Build Additional files 1-7 from the frozen result bundle.
+
+Environment:
+  WORKERS=N      Process-worker budget (legacy alias: THREADS=N).
+  JOBS=N         Concurrent training/simulation jobs, capped at 3.
+  PROJECT_DIR=P  Project root containing data/ and results/.
 EOF
         ;;
     *)

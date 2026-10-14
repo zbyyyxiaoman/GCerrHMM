@@ -617,6 +617,7 @@ def revise_scientific_text(document: Document) -> None:
         text = text.replace(" --gcode", " --gc-demo")
         text = text.replace("WhatsApp", "WhatsHap")
         text = text.replace("whatsap", "WhatsHap")
+        text = text.replace("whatshap", "WhatsHap")
         text = text.replace("badead", "badread")
         text = text.replace("bradread", "badread")
         text = text.replace("GCerHMM", "GCerrHMM")

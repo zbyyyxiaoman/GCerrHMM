@@ -268,7 +268,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project-dir", default=".")
     parser.add_argument("--species", default="Ecoli")
-    parser.add_argument("--threads", type=int, default=16)
+    parser.add_argument(
+        "--threads", "--workers",
+        dest="threads",
+        type=int,
+        default=16,
+        help="Worker budget for alignment/download steps (legacy alias: --threads).",
+    )
     parser.add_argument("--parts", type=int, default=8)
     parser.add_argument("--chunk-size", type=int, default=16 << 20)
     parser.add_argument("--sra-tool", default=None)

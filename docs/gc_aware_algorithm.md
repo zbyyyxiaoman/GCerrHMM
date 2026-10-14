@@ -12,13 +12,14 @@ on local GC content.
 
 The default state space is:
 
-`M`, `S`, `I`, `D1`, `D2`, `D3`, `D4+`
+`M`, `S`, `I1`, `I2`, `I3`, `I4+`, `D1`, `D2`, `D3`, `D4+`
 
 where:
 
 - `M` is a reference-matching aligned base;
 - `S` is a substitution;
-- `I` is an insertion;
+- `I1` to `I3` are short insertions and `I4+` is an insertion of four or
+  more bases;
 - `D1` to `D3` are short deletions;
 - `D4+` is a deletion of four or more bases.
 
@@ -73,10 +74,11 @@ The model is written as plain JSON and can be loaded by
 
 ## Parallel execution
 
-`generate_simulated.py --threads N` now uses process-level parallelism for
-CPU-bound Python simulation. The parent samples the read layout once and
-derives a deterministic seed for every read. Workers generate fixed-size
-read chunks, and results are written in read-index order.
+`generate_simulated.py --workers N` uses process-level parallelism for
+CPU-bound Python simulation. The legacy alias `--threads N` remains accepted.
+The parent samples the read layout once and derives a deterministic seed for
+every read. Workers generate fixed-size read chunks, and results are written
+in read-index order.
 
 This gives two properties that matter for a real simulator:
 

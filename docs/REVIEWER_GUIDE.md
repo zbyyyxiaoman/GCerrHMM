@@ -56,7 +56,7 @@ the same deterministic quick chain:
 ```bash
 PROJECT_DIR=/path/to/project \
 CODE_DIR=/path/to/gcerrhmm/repository \
-THREADS=16 \
+WORKERS=16 \
 JOBS=3 \
 bash /path/to/gcerrhmm/repository/reproduce.sh --quick-reproduce
 ```
@@ -64,7 +64,7 @@ bash /path/to/gcerrhmm/repository/reproduce.sh --quick-reproduce
 To prepare the inputs separately:
 
 ```bash
-SPECIES=Ecoli THREADS=16 bash reproduce.sh --prepare-demo
+SPECIES=Ecoli WORKERS=16 bash reproduce.sh --prepare-demo
 bash reproduce.sh --quick-demo
 ```
 
@@ -92,6 +92,21 @@ logs/
 The important reproducibility property is that the three routes share the
 same seed and coverage. A negative delta is a valid result and must remain
 negative.
+
+For a CPU and memory check, run:
+
+```bash
+python scripts/benchmark_resource_usage.py \
+  --project-dir /path/to/project \
+  --repo-dir /path/to/gcerrhmm/repository \
+  --species Ecoli \
+  --workers 1,2,4 \
+  --output-dir /path/to/project/results/resource_benchmark
+```
+
+This writes `resource_benchmark.csv` and `resource_benchmark.md` with wall
+time, peak RSS, reads/s and speedup. It requires GNU `/usr/bin/time` and
+therefore runs on Linux.
 
 ## Tier 2: reproduce the publication-scale decision
 
@@ -129,6 +144,16 @@ The repository deliberately does not convert a failed universal gate into a
 success claim. The supported statement is narrower: GC conditioning produces a
 reproducible directional effect in GC-heterogeneous genomes, with the clearest
 effect in *A. thaliana*.
+
+The W3.8 update adds a second, pre-specified six-seed *A. thaliana* cohort for
+the same 1-bin versus 5-bin endpoint. It confirmed the single-species effect
+(mean delta `r = 0.3008`, 95% CI `0.1624-0.4391`, paired t-test
+`p = 0.0025`). The original first cohort and the six-species gate remain in the
+record unchanged. The endpoint-only calculation is accepted only after it
+reproduces all six first-cohort top-level `pearson_r` values exactly; see
+`docs/confirmatory_ath_bin_replication_phase2_result.md` and the retained
+equivalence transcript under
+`docs/confirmatory_ath_bin_replication_phase2_bundle/`.
 
 ## Common failure modes
 

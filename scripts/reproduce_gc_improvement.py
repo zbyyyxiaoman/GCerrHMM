@@ -299,10 +299,14 @@ def main():
     parser.add_argument("--platform", choices=("ont", "hifi"), default="ont")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
-        "--threads",
+        "--threads", "--workers",
+        dest="threads",
         type=int,
         default=None,
-        help=f"Total worker budget; defaults to min({THREAD_CAP}, CPU count).",
+        help=(
+            "Total process-worker budget; defaults to "
+            f"min({THREAD_CAP}, CPU count). The legacy alias is --threads."
+        ),
     )
     parser.add_argument(
         "--jobs",

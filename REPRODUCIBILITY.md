@@ -84,13 +84,13 @@ coverage and seed, evaluates both routes plus the empirical-sampling
 baseline, and writes the C-minus-B delta:
 
 ```bash
-SPECIES=Ecoli COVERAGE=10 SEED=42 THREADS=16 JOBS=3 bash reproduce.sh --gc-demo
+SPECIES=Ecoli COVERAGE=10 SEED=42 WORKERS=16 JOBS=3 bash reproduce.sh --gc-demo
 ```
 
 For a fast deterministic smoke run of the same chain:
 
 ```bash
-SPECIES=Ecoli SEED=42 THREADS=16 JOBS=3 bash reproduce.sh --quick-reproduce
+SPECIES=Ecoli SEED=42 WORKERS=16 JOBS=3 bash reproduce.sh --quick-reproduce
 ```
 
 `--quick-reproduce` downloads the public E. coli reference and ONT FASTQ,
@@ -110,6 +110,28 @@ written under `results/gc_improvement/<species>_<timestamp>/` and include:
 The gate records whether GC-aware improves the k-mer, GC, and composite
 scores. A failed gate is retained as a negative result rather than
 rewritten.
+
+The GC Kolmogorov-Smirnov comparison uses a local fixed RNG
+(`GC_KS_SEED = 20260913`) rather than the process-global NumPy state. Live
+runs therefore produce the same GC sub-score and composite for the same
+inputs and seed. The historical frozen result bundle is retained unchanged
+and remains the publication snapshot.
+
+## Second A. thaliana replication cohort
+
+The W3.8 update adds a pre-specified six-seed cohort for the single primary
+contrast `5-bin - 1-bin` GC-curve Pearson `r`. The protocol is recorded in
+`docs/confirmatory_ath_bin_replication_phase2_protocol.md`, the result is in
+`docs/confirmatory_ath_bin_replication_phase2_result.md`, and the frozen
+endpoint JSON files are under
+`docs/confirmatory_ath_bin_replication_phase2_bundle/`.
+
+The endpoint-only calculation in `scripts/gc_error_curve_endpoint.py` was
+accepted only after it reproduced all six first-cohort top-level `pearson_r`
+values exactly; the comparison is recorded in the bundle's
+`EQUIVALENCE.md`. It uses the same 100-bp windows, 10 equal-width GC bins,
+CIGAR event definition and 20,000-base support threshold as the complete
+fidelity script.
 
 ## Teacher-framework figures
 
@@ -195,5 +217,6 @@ validation entry points are `scripts/titan_fetch_hifi.sh` and
 
 ## Citation and DOI
 
-The GitHub repository URL and Zenodo DOI must be filled after publication.
-They are deliberately not fabricated here.
+The public repository is `https://github.com/zbyyyxiaoman/GCerrHMM`.
+The version-stable Zenodo concept DOI is `10.5281/zenodo.23034361`.
+Citation metadata is recorded in `CITATION.cff`.

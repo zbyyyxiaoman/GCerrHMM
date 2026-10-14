@@ -8,6 +8,14 @@
     "seeds": [11, 22, 33],
     "used_by": "profile-matched GC-bin ablation"
   },
+  "athaliana_bin_replication": {
+    "seeds": [44, 55, 66],
+    "used_by": "local W3.5 A. thaliana 1-bin versus 5-bin replication"
+  },
+  "athaliana_bin_replication_phase2": {
+    "seeds": [77, 88, 99, 111, 122, 133],
+    "used_by": "pre-specified second A. thaliana 1-bin versus 5-bin cohort"
+  },
   "coverage_replicates": {
     "seeds": [101, 202, 303],
     "used_by": "coverage-replicate analysis"

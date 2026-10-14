@@ -41,7 +41,7 @@ panel only because PBSim3-sample has no SNP/indel split.
 
 Assembly N50 and reference identity for the measured panel, together with
 the phasing status. HiFi is assembled with hifiasm, ONT with Flye, and
-diploid phasing is evaluated with whatshap against a phased truth VCF.
+diploid phasing is evaluated with WhatsHap against a phased truth VCF.
 Historical raven values are not relabeled as hifiasm or Flye results, and
 PBSim3-errhmm is omitted because no assembly run exists for it.
 The H. sapiens chr21 row uses the coverage-matched 30x panel; N50 colors

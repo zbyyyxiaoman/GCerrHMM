@@ -86,3 +86,11 @@ def test_project_file_falls_back_to_code_subdirectory():
             root,
             "docs/paper_figures/table1_species_panel.csv",
         ) == path
+
+
+def test_gc_ks_sampling_uses_a_local_deterministic_rng():
+    text = (ROOT / "src" / "evaluate_level1.py").read_text(encoding="utf-8")
+    assert "GC_KS_SEED = 20260913" in text
+    assert "rng = np.random.default_rng(GC_KS_SEED)" in text
+    assert "real_samples = rng.choice(" in text
+    assert "sim_samples = rng.choice(" in text

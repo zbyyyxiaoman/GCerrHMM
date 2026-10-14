@@ -12,6 +12,73 @@ model, the simulation and evaluation harness, the pre-registered decision
 rules, the frozen result checks, and the manuscript/figure builders. It does
 not redistribute sequencing reads.
 
+## Reviewer quick start
+
+Start with the data-free path. It takes seconds to a few minutes and prints a
+fail-closed result:
+
+```bash
+conda env create -f environment.yml
+conda activate errhmm
+
+bash reproduce.sh --tests          # expected: TESTS_OK
+bash reproduce.sh --static-check   # expected: STATIC_AUDIT_OK
+bash reproduce.sh --fixture-demo   # writes results/fixture_demo/
+```
+
+For the public-data path, `WORKERS` is the process-worker budget for the
+simulator and `THREADS` remains a legacy alias:
+
+```bash
+WORKERS=16 JOBS=3 bash reproduce.sh --quick-reproduce
+```
+
+The quick path writes a timestamped run directory with
+`gc_improvement_summary.json`, `gc_improvement_summary.md`, three simulated
+FASTQ files, and one evaluation JSON per route. A failed gate is preserved as
+a negative result rather than rewritten.
+
+For a publication-scale run and the resource-scaling check:
+
+```bash
+WORKERS=16 JOBS=3 bash reproduce.sh --gc-demo
+python scripts/benchmark_resource_usage.py \
+  --project-dir . \
+  --repo-dir . \
+  --species Ecoli \
+  --workers 1,2,4 \
+  --output-dir results/resource_benchmark
+```
+
+The benchmark writes `resource_benchmark.csv` and `resource_benchmark.md`.
+`scripts/benchmark_parallel_simulation.py` remains available for the
+simulation-only scaling check. The generator's `--workers` option is
+process-level parallelism; the retained `--threads` spelling is an alias, not
+a promise of shared-memory threads.
+
+## Core workflow
+
+```text
+src/train_errhmm.py
+  alignment CIGAR -> GC-conditioned error-state model
+src/generate_simulated.py
+  model + reference + profile -> simulated FASTQ
+scripts/reproduce_gc_improvement.py
+  train + simulate + Level-1 evaluate the matched routes
+scripts/gc_error_fidelity.py
+  real and simulated BAMs -> GC-stratified error curve
+src/evaluate_level1.py
+  read length, QV, GC and k-mer distribution metrics
+src/downstream_tasks.py
+  mapping, variant, assembly and phasing helpers
+scripts/benchmark_resource_usage.py
+  wall time, peak RSS, throughput and process scaling
+```
+
+The publication-scale tables and figures are rebuilt from the bundled frozen
+result bundle with `--framework-figures`; the demo commands exercise the same
+code path on smaller inputs.
+
 ## Platform scope
 
 The primary claim and the primary six-genome analysis are ONT. HiFi is a
@@ -56,6 +123,11 @@ The current evidence is directional for a species-dependent effect:
 * In *A. thaliana*, five or more GC bins improve the shape fidelity of the
   local GC-error curve over the one-bin control: `r = 0.779` at one bin versus
   `r >= 0.960` at five or more bins (`n = 3` seeds).
+* A second, pre-specified six-seed *A. thaliana* cohort confirmed the same
+  single-species contrast (mean delta `r = 0.3008`, 95% CI `0.1624-0.4391`,
+  paired t-test `p = 0.0025`). The first three-seed cohort remained
+  directionally positive but non-confirmatory (`p = 0.0834`), and neither
+  cohort reopens the original cross-species gate.
 * The six-species panel favours the GC-aware route in four of six genomes in
   both replicates. The exceptions are *S. cerevisiae* (narrow GC structure)
   and *E. coli* (limited discriminating power at this coverage).
@@ -125,7 +197,7 @@ bash reproduce.sh --fixture-demo
 For an end-to-end check from public data, use one command:
 
 ```bash
-SPECIES=Ecoli THREADS=16 JOBS=3 bash reproduce.sh --quick-reproduce
+SPECIES=Ecoli WORKERS=16 JOBS=3 bash reproduce.sh --quick-reproduce
 ```
 
 It downloads the NCBI reference and public ONT FASTQ for the selected species,
@@ -133,7 +205,7 @@ checks the configured FASTQ checksum, aligns the reads with minimap2/samtools,
 then trains the GC-aware model and the one-bin control, simulates three
 matched routes, evaluates all three routes, and writes the C-minus-B report.
 The launcher caps `samtools sort` threads from available memory, so the
-documented `THREADS=16` request is safe on smaller workstations; use
+documented `WORKERS=16` request is safe on smaller workstations; use
 `SORT_MEMORY` or `SORT_THREADS` to override the automatic choice.
 
 If the demo inputs are already prepared, the faster command is:
@@ -145,7 +217,7 @@ bash reproduce.sh --quick-demo
 The data preparation can also be run separately with:
 
 ```bash
-SPECIES=Ecoli THREADS=16 bash reproduce.sh --prepare-demo
+SPECIES=Ecoli WORKERS=16 bash reproduce.sh --prepare-demo
 ```
 
 Quick mode uses deterministic 1x coverage, reduced evaluation sampling and
@@ -156,7 +228,7 @@ smoke test, not the publication-scale result.
 For the publication-scale 10x run:
 
 ```bash
-SPECIES=Ecoli THREADS=16 JOBS=3 bash reproduce.sh --gc-demo
+SPECIES=Ecoli WORKERS=16 JOBS=3 bash reproduce.sh --gc-demo
 ```
 
 Both commands respect a 16-thread ceiling. The launcher applies
@@ -276,6 +348,7 @@ src/
   downstream_tasks.py     mapping/variant/assembly/phasing helpers
 scripts/
   reproduce_gc_improvement.py   end-to-end quick/full demo
+  gc_error_curve_endpoint.py    10-bin GC-error endpoint used by the second A. thaliana cohort
   delta_to_real_decision.py     pre-registered chr21 decision rule
   build_*_figures.py            manuscript figure builders
   package_github_release.py     clean portable release builder
@@ -285,6 +358,8 @@ config/
 docs/
   delta_to_real_framing.md      pre-registered decision rule
   data_freeze_manifest.md       append-only artifact hashes
+  confirmatory_ath_bin_replication_phase2_result.md
+                                second pre-specified replication result
   panel_provenance.md           30x panel provenance contract
   manuscript/                   W3.3 submission and review copies
 tests/

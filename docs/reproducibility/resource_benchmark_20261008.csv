@@ -1,0 +1,5 @@
+stage,workers,wall_seconds,peak_rss_mb,reads,reads_per_second,speedup_vs_1
+train_gc10,1,88.12,72.73,,,1.00
+simulate_10x,1,29.56,106.73,4665,157.8,1.00
+simulate_10x,2,17.11,122.40,4665,272.6,1.73
+simulate_10x,4,10.64,123.02,4665,438.4,2.78

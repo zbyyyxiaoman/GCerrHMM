@@ -19,14 +19,18 @@ import random
 import shutil
 import subprocess
 import tempfile
-import numpy as np
-import pysam
-from Bio import SeqIO
-from scipy import stats
 from collections import Counter
 import argparse
 from pathlib import Path
 import pickle
+
+import numpy as np
+import pysam
+from Bio import SeqIO
+from scipy import stats
+
+
+GC_KS_SEED = 20260913
 
 try:
     sys.stdout.reconfigure(line_buffering=True)
@@ -422,12 +426,13 @@ class Level1Evaluator:
     
     def gc_ks_test(self, real_gc, sim_gc):
         """GC分布的Kolmogorov-Smirnov检验"""
-        real_samples = np.random.choice(
+        rng = np.random.default_rng(GC_KS_SEED)
+        real_samples = rng.choice(
             np.linspace(0, 100, len(real_gc['histogram'][0])),
             size=10000,
             p=np.array(real_gc['histogram'][0]) / sum(real_gc['histogram'][0])
         )
-        sim_samples = np.random.choice(
+        sim_samples = rng.choice(
             np.linspace(0, 100, len(sim_gc['histogram'][0])),
             size=10000,
             p=np.array(sim_gc['histogram'][0]) / sum(sim_gc['histogram'][0])

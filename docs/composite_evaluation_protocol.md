@@ -12,6 +12,10 @@
 | GC KS similarity | 0.25 |
 | k-mer frequency similarity | 0.15 |
 
+GC KS 的离散近似使用局部固定随机种子 `20260913`，不读取进程全局 NumPy
+随机状态；同一输入与随机种子的 live run 因此会产生相同的 GC 子分数。
+历史冻结结果包保持原样。
+
 当 `ENABLE_LEVEL1_ERROR_RATE` 未开启时，error-rate 项不参与计算，
 其余权重按实际可用维度重新归一化。当前 cross-tool 表就是这种情况，
 因此表内只出现 read length、QV、GC 和 k-mer 四项。

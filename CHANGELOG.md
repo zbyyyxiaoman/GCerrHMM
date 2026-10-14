@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased - 2026-10-14
+
+- Added the second pre-specified six-seed *A. thaliana* replication cohort
+  (`p = 0.0025`) and the W3.8 manuscript package.
+- Added an endpoint-only GC-curve implementation that exactly reproduces all
+  six first-cohort top-level `pearson_r` values before being used for the new
+  cohort.
+- Fixed the `--quick-reproduce` data-preparation argument continuation and
+  added a regression test.
+- Made the GC Kolmogorov-Smirnov sampling deterministic with a local fixed
+  RNG; repeated `--fixture-demo` runs now produce identical composite and GC
+  sub-scores.
+- Updated README, reviewer guide, Additional file 3, number map and frozen
+  artifact manifest.
+
 ## 1.0.4 - 2026-09-30
 
 - Added the checked 508-file public result bundle and automatic result

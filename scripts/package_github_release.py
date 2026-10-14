@@ -47,6 +47,9 @@ CORE_SCRIPTS = [
     "audit_panel_provenance.py",
     "audit_w3_submission.py",
     "bai_ref_span.py",
+    "benchmark_parallel_simulation.py",
+    "benchmark_resource_usage.py",
+    "confirm_ath_replication_stats.py",
     "build_additional_files.py",
     "build_background_figures.py",
     "build_chinese_abstract.py",
@@ -60,6 +63,10 @@ CORE_SCRIPTS = [
     "build_v2_layer_summary.py",
     "build_w3_review_copy.py",
     "build_w3_submission.py",
+    "build_w3_8_evaluation_response.py",
+    "build_w3_8_replication.py",
+    "build_w3_8_response_zh.py",
+    "build_w3_8_review_with_figures.py",
     "check_gc_model.py",
     "common_io.py",
     "coverage_power_analysis.py",
@@ -74,11 +81,13 @@ CORE_SCRIPTS = [
     "export_gc_bins_cross_table.py",
     "figure_io.py",
     "gc_error_fidelity.py",
+    "gc_error_curve_endpoint.py",
     "innovation_postanalysis.py",
     "install_bundled_results.py",
     "package_github_release.py",
     "plot_gc_error_curve.py",
     "pooled_gc_curve.py",
+    "plot_parallel_benchmark.py",
     "prepare_demo_data.py",
     "project_paths.py",
     "recompute_kmer_metric.py",
@@ -88,11 +97,15 @@ CORE_SCRIPTS = [
     "static_audit.py",
     "subsample_fastq_to_bases.py",
     "summarize_hifi_seeds.py",
+    "update_additional_file_3_phase2.py",
     "verify_freeze_manifest.py",
 ]
 
 DOCS = [
     "composite_evaluation_protocol.md",
+    "confirmatory_ath_bin_replication_phase2_protocol.md",
+    "confirmatory_ath_bin_replication_phase2_result.md",
+    "confirmatory_ath_bin_replication_phase2_stats.json",
     "cross_tool_reproducibility_notes.md",
     "delta_to_real_framing.md",
     "data_freeze_manifest.md",
@@ -104,6 +117,7 @@ DOCS = [
     "gcerrhmm_main_figure_captions.md",
     "kmer_metric_audit.md",
     "manuscript_number_map.md",
+    "methods_parameters.md",
     "panel_support.md",
     "panel_provenance.md",
     "REVIEWER_GUIDE.md",
@@ -115,6 +129,8 @@ REPRODUCIBILITY_FILES = [
     "gc_improvement_summary.csv",
     "gc_improvement_summary.json",
     "gc_improvement_summary.md",
+    "resource_benchmark_20261008.csv",
+    "resource_benchmark_20261008.md",
     "r1_level1_overall.csv",
     "r1_level1_overall.md",
     "r1_level1_overall.sha256",
@@ -129,12 +145,29 @@ MANUSCRIPT_FILES = [
     "GCerrHMM_BMC_Research_article_W3.4_submission_20260930.docx",
     "GCerrHMM_BMC_Research_article_W3.4_submission_20260930.pdf",
     "GCerrHMM_BMC_Research_article_W3.4_submission_20260930_extract.txt",
+    "GCerrHMM_BMC_Research_article_W3.6_submission_20261008.docx",
+    "GCerrHMM_BMC_Research_article_W3.6_submission_20261008.pdf",
+    "GCerrHMM_BMC_Research_article_W3.7_submission_20261008.docx",
+    "GCerrHMM_BMC_Research_article_W3.7_submission_20261008.pdf",
+    "GCerrHMM_BMC_Research_article_W3.8_submission_20261014.docx",
+    "GCerrHMM_BMC_Research_article_W3.8_submission_20261014.pdf",
+    "GCerrHMM_BMC_Research_article_W3.8_review_with_figures_20261014.docx",
+    "GCerrHMM_BMC_Research_article_W3.8_review_with_figures_20261014.pdf",
     "GCerrHMM_Chinese_figure_abstract_W3.3_20260929.pdf",
     "GCerrHMM_Chinese_full_manuscript_W3.3_20260929.pdf",
     "GCerrHMM_Chinese_full_W3.4_20260930.docx",
     "GCerrHMM_Chinese_full_W3.4_20260930.pdf",
+    "GCerrHMM_Chinese_full_W3.6_20261008.docx",
+    "GCerrHMM_Chinese_full_W3.6_20261008.pdf",
+    "W3.7_response_to_editor.md",
+    "W3.7_response_to_editor_zh.docx",
+    "W3.7_response_to_editor_zh.pdf",
+    "W3.8_evaluation_response_zh.md",
+    "给师兄的修改说明_W3.8_20261014.docx",
+    "给师兄的修改说明_W3.8_20261014.pdf",
     "W3.2_review_response.md",
     "W3.3_figures_contact_sheet.png",
+    "W3.6_response_to_editor.md",
     "W3_reference_audit.md",
     "W3_style_notes.md",
     "author_metadata.template.json",
@@ -328,6 +361,23 @@ def main() -> None:
             bundle_zip,
             staging / "docs" / "reproducibility" / "results_bundle.zip",
         )
+    phase2_bundle_source = (
+        source / "docs" / "confirmatory_ath_bin_replication_phase2_bundle"
+    )
+    if phase2_bundle_source.exists():
+        for path in sorted(phase2_bundle_source.rglob("*")):
+            if not path.is_file():
+                continue
+            relative = path.relative_to(phase2_bundle_source)
+            if relative.parts[0] not in {"results", "EQUIVALENCE.md"}:
+                continue
+            copy_portable(
+                path,
+                staging
+                / "docs"
+                / "confirmatory_ath_bin_replication_phase2_bundle"
+                / relative,
+            )
     for filename in REPRODUCIBILITY_FILES:
         copy_portable(
             source / "docs" / "reproducibility" / filename,
@@ -359,6 +409,15 @@ def main() -> None:
         for path in sorted((source / directory).glob("*")):
             if path.is_file():
                 copy_portable(path, staging / directory / path.name)
+
+    copy_portable(
+        source
+        / "docs"
+        / "additional_files"
+        / "Additional_file_3_gc_bin_ablation_W3.8.xlsx",
+        staging / "docs" / "additional_files"
+        / "Additional_file_3_gc_bin_ablation.xlsx",
+    )
 
     for path in sorted(staging.rglob("__pycache__"), reverse=True):
         if path.is_dir():
