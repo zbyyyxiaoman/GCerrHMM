@@ -118,7 +118,9 @@ a GC-specific measurement.
 
 ## Scientific status
 
-The current evidence is directional for a species-dependent effect:
+The current evidence supports a confirmed single-species effect in
+*A. thaliana* and directional, species-dependent evidence across the wider
+panel:
 
 * In *A. thaliana*, five or more GC bins improve the shape fidelity of the
   local GC-error curve over the one-bin control: `r = 0.779` at one bin versus
@@ -129,8 +131,8 @@ The current evidence is directional for a species-dependent effect:
   directionally positive but non-confirmatory (`p = 0.0834`), and neither
   cohort reopens the original cross-species gate.
 * The six-species panel favours the GC-aware route in four of six genomes in
-  both replicates. The exceptions are *S. cerevisiae* (narrow GC structure)
-  and *E. coli* (limited discriminating power at this coverage).
+  both replicates. The exceptions are *A. thaliana* and *D. melanogaster*,
+  which were mixed across the two replicates in this route-level panel.
 * The strict pre-registered two-species gate was not met. The result is
   therefore reported as directional evidence plus effect size, not as a
   universal claim that GC conditioning always improves every simulator
@@ -361,7 +363,7 @@ docs/
   confirmatory_ath_bin_replication_phase2_result.md
                                 second pre-specified replication result
   panel_provenance.md           30x panel provenance contract
-  manuscript/                   W3.3 submission and review copies
+  manuscript/                   W3.8 submission and review copies
 tests/
   run_tests.py                   dependency-free test entry point
 ```

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from copy import deepcopy
 from pathlib import Path
 
@@ -95,6 +96,35 @@ def format_p(value: float) -> str:
     return "<0.0001" if value < 0.0001 else f"{value:.4f}"
 
 
+def remove_paragraph(paragraph: Paragraph) -> None:
+    element = paragraph._element
+    element.getparent().remove(element)
+
+
+def remove_paragraphs_starting(document: Document, prefixes: tuple[str, ...]) -> None:
+    for paragraph in list(document.paragraphs):
+        if paragraph.text.strip().startswith(prefixes):
+            remove_paragraph(paragraph)
+
+
+def strip_backticks(document: Document) -> None:
+    for paragraph in document.paragraphs:
+        if "`" in paragraph.text:
+            set_text(paragraph, paragraph.text.replace("`", ""))
+    for table in document.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    if "`" in paragraph.text:
+                        set_text(paragraph, paragraph.text.replace("`", ""))
+
+
+def format_figure_captions(document: Document) -> None:
+    for paragraph in document.paragraphs:
+        if re.match(r"Figure [1-9]\.", paragraph.text.strip()) and paragraph.runs:
+            paragraph.runs[0].bold = True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, required=True)
@@ -119,6 +149,54 @@ def main() -> None:
 
     document = Document(args.input)
     body_template = find_paragraph(document, "GCerrHMM is an error-state HMM")
+
+    set_text(
+        find_paragraph(document, "[Author names]"),
+        "Boyang Zhang1, Tao Jiang2,*",
+    )
+    set_text(
+        find_paragraph(document, "[Affiliations]"),
+        "1 Faculty of Life Science and Medicine, Harbin Institute of "
+        "Technology, Harbin, China; 2 Faculty of Computing, Harbin Institute "
+        "of Technology, Harbin, China.",
+    )
+    set_text(
+        find_paragraph(document, "Corresponding author:"),
+        "Corresponding author: Tao Jiang, Faculty of Computing, Harbin "
+        "Institute of Technology, Harbin, China.",
+    )
+
+    background_cycsim_old = (
+        "Recent work has expanded the field toward metagenomic profiling [4], "
+        "tunable signal-level generation [5, 6], transformer-based signal "
+        "models [7, 8], context-aware simulation for parameter optimisation "
+        "[9]. These context-aware efforts establish the value of sequence "
+        "context, but they do not define a GC-conditioned transition model "
+        "evaluated with a GC-stratified error instrument, and more rigorous "
+        "long-read benchmark references [10, 11]."
+    )
+    background_cycsim_new = (
+        "Recent work has expanded the field toward metagenomic profiling [4], "
+        "tunable signal-level generation [5, 6], and transformer-based signal "
+        "models [7, 8]. CycSim [9] learns sequence-context-dependent error "
+        "profiles from empirical long-read data and uses them for "
+        "mapping-parameter optimisation. This establishes the value of "
+        "sequence context, but CycSim is designed around sequence context for "
+        "mapping-parameter selection, whereas the present work conditions "
+        "transition matrices on local GC content and evaluates them with a "
+        "GC-stratified error instrument. More rigorous long-read benchmark "
+        "references are also needed [10, 11]."
+    )
+    for paragraph in document.paragraphs:
+        if background_cycsim_old in paragraph.text:
+            set_text(
+                paragraph,
+                paragraph.text.replace(
+                    background_cycsim_old,
+                    background_cycsim_new,
+                    1,
+                ),
+            )
 
     signpost_replacements = {
         "Results are organised by the claim each block can support.":
@@ -227,14 +305,12 @@ def main() -> None:
         "layers. GC-aware simulation moved the local GC-error curve in the "
         "expected direction for four of six genomes in both replicates; the "
         "strict cross-species gate was not met, so the cross-species result "
-        "remains directional. In A. thaliana, five or more bins raised curve "
-        "correlation from r = 0.779 (SD 0.062) to r >= 0.960. A second, "
-        f"pre-specified six-seed cohort {abstract_result} "
-        f"(mean delta r = {mean:.4f}; 95% CI {low:.4f} to {high:.4f}; "
-        f"paired t-test p = {p_value:.4f}), while the original cross-species "
-        "gate remains unchanged. The harness separates read-sampling from "
-        "between-window uncertainty, and process-level scaling preserves "
-        "FASTQ identity while reducing wall time.",
+        "remains directional. In A. thaliana, a second pre-specified six-seed "
+        f"cohort {abstract_result} (mean delta r = {mean:.4f}; "
+        f"p = {p_value:.4f}), while the original cross-species gate remains "
+        "unchanged. The harness separates read-sampling from between-window "
+        "uncertainty, and process-level scaling preserves FASTQ identity while "
+        "reducing wall time.",
     )
     conclusion = (
         "A pre-specified single-species cohort confirms the A. thaliana "
@@ -355,6 +431,54 @@ def main() -> None:
         "GC-error amplitude predicts when GC-aware training is beneficial.",
     )
 
+    relation = find_paragraph(
+        document,
+        "NanoSim, PBSim3 and NPBSS established",
+    )
+    set_text(
+        relation,
+        "NanoSim, PBSim3 and NPBSS established the value of empirical or "
+        "HMM-based long-read simulation [1-3]. CycSim [9] is the closest "
+        "context-aware comparator: it learns sequence-context-dependent error "
+        "profiles and uses them to optimise long-read mapping parameters. "
+        "GCerrHMM differs in the conditioning unit and in the claim being "
+        "tested: it conditions error-state transitions on local GC bins and "
+        "reports a GC-stratified error curve under pre-registered decision "
+        "rules. The two tools therefore answer different questions. CycSim was "
+        "not included in the head-to-head panel because the present simulator "
+        "comparison was frozen under a shared coverage, profile and "
+        "truth-injection protocol, whereas CycSim's published evaluation is "
+        "anchored to mapping-parameter optimisation. A matched CycSim "
+        "benchmark would be a useful future extension rather than a post hoc "
+        "addition to the frozen panel. A 2026 benchmark showed that existing "
+        "simulators do not reproduce every context-dependent error pattern "
+        "[11].",
+    )
+
+    relationship_table = next(
+        table
+        for table in document.tables
+        if table.rows[0].cells[0].text.strip() == "Tool"
+        and "Relationship to this study" in table.rows[0].cells[-1].text
+    )
+    relationship_row = relationship_table.add_row()
+    for cell, value in zip(
+        relationship_row.cells,
+        (
+            "CycSim [9]",
+            "Context-dependent empirical error model",
+            "Sequence context (k-mer)",
+            "Mapping-parameter optimisation",
+            "Complementary context-aware comparator; different conditioning "
+            "unit and evaluation target",
+        ),
+    ):
+        set_cell_text(cell, value)
+    set_table_geometry(
+        relationship_table,
+        [900, 1900, 1600, 2100, 2860],
+    )
+
     limitations = find_paragraph(document, "First, the cross-species GC-conditional")
     set_text(
         limitations,
@@ -406,6 +530,33 @@ def main() -> None:
         "decision rule.",
     )
 
+    composite_paragraph = find_paragraph(
+        document,
+        "On the composite, PBSim3-sample leads",
+    )
+    duplicate_sentence = (
+        " As a single-variable ablation, the length-aware indel encoding "
+        "improves GCerrHMM's composite on E. coli from 83.5 to 87.6, driven "
+        "by a 16-point gain in the k-mer sub-score."
+    )
+    set_text(
+        composite_paragraph,
+        composite_paragraph.text.replace(duplicate_sentence, "", 1),
+    )
+
+    performance = find_paragraph(
+        document,
+        "Computational performance was measured",
+    )
+    set_text(
+        performance,
+        performance.text
+        + " Benchmarks were run on Titan (Ubuntu 24.04.1 LTS, Linux kernel "
+        "6.8.0-146-generic; AMD Ryzen 9 3950X 16-core/32-thread CPU; 125 GiB "
+        "RAM) with GNU /usr/bin/time -v, nice -n 19, and up to four process "
+        "workers.",
+    )
+
     set_text(
         find_paragraph(document, "Additional file 3."),
         "Additional file 3. File name: Additional_file_3_gc_bin_ablation.xlsx. "
@@ -414,6 +565,18 @@ def main() -> None:
         "seed, including the first and second independent A. thaliana cohorts "
         "and the pooled 12-seed sensitivity analysis.",
     )
+
+    remove_paragraphs_starting(
+        document,
+        (
+            "Verified against the v2 six-species panel:",
+            "See Table 2.",
+            "See Table 4.",
+            "Repository URL:",
+        ),
+    )
+    strip_backticks(document)
+    format_figure_captions(document)
 
     for section in document.sections:
         for header_paragraph in section.header.paragraphs:

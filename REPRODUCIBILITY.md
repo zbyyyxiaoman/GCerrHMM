@@ -98,6 +98,11 @@ checks the configured FASTQ checksum, builds the aligned BAM with
 minimap2/samtools, and then runs the same deterministic quick chain. If the
 inputs already exist, use `--quick-demo` directly.
 
+The publication resource benchmark was measured on Titan (Ubuntu 24.04.1
+LTS, Linux kernel 6.8.0-146-generic; AMD Ryzen 9 3950X 16-core/32-thread CPU;
+125 GiB RAM) with GNU `/usr/bin/time -v`, `nice -n 19`, and up to four
+process workers.
+
 The command refuses to overwrite an existing run directory. Outputs are
 written under `results/gc_improvement/<species>_<timestamp>/` and include:
 

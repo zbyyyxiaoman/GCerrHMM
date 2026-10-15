@@ -2,7 +2,8 @@
 
 ## Model and training parameters
 
-- HMM state space, full: `M`, `S`, `I`, `D1`, `D2`, `D3`, `D4+` (7 states)
+- HMM state space, full: `M`, `S`, `I1`, `I2`, `I3`, `I4+`, `D1`, `D2`,
+  `D3`, `D4+` (10 states)
 - HMM state space, simplified: `M`, `S`, `I`, `D` (4 states)
 - Default GC bins: 10
 - Profile-matched GC-bin panels: 1, 5, 10, and 20 bins
@@ -47,6 +48,8 @@ Versions from the Titan analysis environments:
 - SAMtools: 1.23.1
 - BCFtools: 1.24
 - Flye: 2.9.6-b1802
+- hifiasm: 0.25.0
+- WhatsHap: 2.8
 - Raven assembler: 1.8.3
 - NanoSim: 3.2.3
 - PBSim3: 3.0.5
@@ -63,5 +66,6 @@ Versions from the Titan analysis environments:
   frozen Level-1 JSONs. The separate cross-tool evaluation uses the
   matched-sampling k-mer correction documented in `kmer_metric_audit.md`.
 - PBSim3 is the sample/profile-fitted external baseline.
-- HiFi cross-platform analysis is not reported because the available
-  `Ecoli_hifi.fastq.gz` is short-read data (mean length 69.84 bp).
+- HiFi is a secondary cross-platform branch. The available E. coli HiFi FASTQ
+  has an encoding-limited quality distribution, so its absolute QV values are
+  reported as source-limited rather than as a typical platform benchmark.

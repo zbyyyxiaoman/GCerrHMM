@@ -59,6 +59,18 @@ def main() -> None:
     for paragraph in document.paragraphs:
         text = paragraph.text.replace("W3.7", "W3.8")
         set_text(paragraph, text)
+        if "CycSim" in paragraph.text:
+            set_text(
+                paragraph,
+                "CycSim 是上下文感知长读长模拟器，与本文直接相关。新稿已在 "
+                "Background、Discussion 和 Table 10 中明确写出：CycSim 学习"
+                "序列上下文依赖的错误谱，主要服务于 mapping 参数优化；"
+                "GCerrHMM 条件化的是 GC-bin 的 error-state transition，并用"
+                "GC 分层曲线和预注册规则评价。由于本文的跨工具面板已经在统一 "
+                "coverage、profile 和 truth-injection 协议下冻结，我们没有把 "
+                "CycSim 事后加入旧面板做非等价头对头，而是保留设计层比较，"
+                "并把匹配实验列为后续工作。",
+            )
 
     summary = find(document, "四、简单总结")
     set_text(summary, "五、简单总结")

@@ -42,7 +42,7 @@ bash reproduce.sh --smoke
 | Table 7 | six-species stratified panel | `docs/reproducibility/results_bundle/stats/gc_fidelity_summary.csv` |
 | Table 8 | depth/uncertainty analysis | coverage and depth outputs under `docs/reproducibility/results_bundle/stats/` |
 | Table 9 | computational resource benchmark | `docs/reproducibility/resource_benchmark_20261008.{csv,md}`; `scripts/benchmark_resource_usage.py` |
-| Table 10 | simulator relationship table | `docs/final_cross_tool_comparison.md` and manuscript Table 10 |
+| Table 10 | simulator relationship table, including the design-level CycSim comparison | `docs/final_cross_tool_comparison.md` and manuscript Table 10 |
 
 ## Additional files
 

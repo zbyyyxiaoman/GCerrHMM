@@ -29,3 +29,9 @@ same top-N normalized sampling on both real and simulated data.
   "errHMM wins" or "PBSim3 wins" claim.
 - See `composite_evaluation_protocol.md` for the fairness and reporting
   caveats.
+
+CycSim is not included in this head-to-head table because the present
+comparison was frozen under a shared coverage, profile and truth-injection
+protocol, while CycSim was published for sequence-context-aware
+mapping-parameter optimisation. The design-level comparison is reported in
+the manuscript's relationship table (Table 10).

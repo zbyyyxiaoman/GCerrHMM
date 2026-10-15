@@ -51,8 +51,9 @@ def main() -> None:
         "",
         "补充了 GC 影响长读长错误的机制解释，包括局部碱基组成、孔道信号与"
         "动力学、二级结构、重复区域比对歧义。Figure 1 现在有明确的分析目的、"
-        "指标含义和主要观察。对 context-aware simulation 的比较改为引用真正"
-        "相关的模拟研究方向，而不是把 CycSim 当作长读长模拟器。",
+        "指标含义和主要观察。对 context-aware simulation 的比较已补齐："
+        "明确说明 CycSim 是上下文感知长读长模拟器，并区分其面向 mapping "
+        "参数优化的目标与本文的 GC-bin 条件化状态转移和 GC 分层评估。",
         "",
         "## 结果",
         "",
@@ -95,11 +96,15 @@ def main() -> None:
         f"{format_p(pooled['paired_t_p'])}。合并分析只作为敏感性分析，"
         "不替代原预注册 gate。",
         "",
-        "## 没有按原句照改的地方",
+        "## 如何回应 CycSim 意见",
         "",
-        "CycSim 不是长读长 sequencer simulator，当前稿件中的 [14] 也不是"
-        "CycSim。我们没有为了迎合这条意见加入错误引用，而是补充了真正相关的"
-        "context-aware simulation 和 simulator benchmark 比较。",
+        "CycSim 是上下文感知长读长模拟器，和我们有直接关系。新稿在 Background、"
+        "Discussion 和 Table 10 中明确写出：CycSim 学习序列上下文依赖的错误谱，"
+        "主要服务于 mapping 参数优化；GCerrHMM 条件化的是 GC-bin 的 error-state "
+        "transition，并用 GC 分层曲线和预注册规则评价。由于本文的跨工具面板已在"
+        "统一 coverage/profile/truth-injection 协议下冻结，我们没有把 CycSim "
+        "事后塞进旧面板做非等价头对头，而是保留设计层比较，并把匹配条件下的"
+        "头对头实验列为后续工作。",
         "",
         "线程问题在现有代码中无法复现。当前生成器提供 process-level workers、"
         "参数校验、单元测试和 1/2/4-worker 扩展性 benchmark。如果仍有具体"

@@ -7,22 +7,23 @@ application script.
 
 Author names, affiliations and the corresponding-author designation are now
 supplied for Boyang Zhang and Tao Jiang. Email addresses, ORCIDs, funding,
-competing interests, CRediT contributions and the Zenodo DOI still require
+competing interests, CRediT contributions and acknowledgements still require
 confirmation before submission.
 
 ## Required fields
 
 | Field | Where it is used | Status |
 |---|---|---|
-| Full author list, order and ORCID | title page and contributions | required |
-| Affiliations and department/city/country | title page | required |
-| Corresponding author name and email | title page and cover letter | required |
+| Full author list and order | title page and contributions | supplied |
+| Author ORCIDs | title page | required if available |
+| Affiliations and department/city/country | title page | supplied |
+| Corresponding author name and email | title page and cover letter | name/affiliation supplied; email required |
 | Funding agency and grant number(s), or "none" | Declarations | required |
 | Competing interests | Declarations and cover letter | required |
 | Author contributions in CRediT format | Declarations | required |
 | Acknowledgements, or "none" | Declarations | required |
-| Repository URL | Availability of data and materials | required |
-| Zenodo DOI | Availability of data and materials | required |
+| Repository URL | Availability of data and materials | supplied |
+| Zenodo DOI | Availability of data and materials | supplied |
 | CC BY or CC BY-NC-ND licence choice | submission system | required |
 | Confirmation that all authors approved submission | cover letter | required |
 | Confirmation that the manuscript is not published or under consideration elsewhere | cover letter | required |
