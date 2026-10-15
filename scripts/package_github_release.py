@@ -137,7 +137,7 @@ REPRODUCIBILITY_FILES = [
     "r1_provenance.md",
 ]
 
-MANUSCRIPT_FILES = [
+LEGACY_MANUSCRIPT_FILES = [
     "AUTHOR_INPUT_REQUIRED.md",
     "README.md",
     "GCerrHMM_BMC_Research_article_W3.3_review_with_figures_20260929.pdf",
@@ -159,15 +159,25 @@ MANUSCRIPT_FILES = [
     "GCerrHMM_Chinese_full_W3.4_20260930.pdf",
     "GCerrHMM_Chinese_full_W3.6_20261008.docx",
     "GCerrHMM_Chinese_full_W3.6_20261008.pdf",
-    "W3.7_response_to_editor.md",
-    "W3.7_response_to_editor_zh.docx",
-    "W3.7_response_to_editor_zh.pdf",
     "W3.8_evaluation_response_zh.md",
     "给师兄的修改说明_W3.8_20261014.docx",
     "给师兄的修改说明_W3.8_20261014.pdf",
-    "W3.2_review_response.md",
     "W3.3_figures_contact_sheet.png",
-    "W3.6_response_to_editor.md",
+    "W3_reference_audit.md",
+    "W3_style_notes.md",
+    "author_metadata.template.json",
+]
+
+MANUSCRIPT_FILES = [
+    "AUTHOR_INPUT_REQUIRED.md",
+    "README.md",
+    "GCerrHMM_BMC_Research_article_W3.8_submission_20261014.docx",
+    "GCerrHMM_BMC_Research_article_W3.8_submission_20261014.pdf",
+    "GCerrHMM_BMC_Research_article_W3.8_review_with_figures_20261014.docx",
+    "GCerrHMM_BMC_Research_article_W3.8_review_with_figures_20261014.pdf",
+    "W3.8_evaluation_response_zh.md",
+    "给师兄的修改说明_W3.8_20261014.docx",
+    "给师兄的修改说明_W3.8_20261014.pdf",
     "W3_reference_audit.md",
     "W3_style_notes.md",
     "author_metadata.template.json",
