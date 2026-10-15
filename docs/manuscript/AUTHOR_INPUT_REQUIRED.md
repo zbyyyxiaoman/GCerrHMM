@@ -6,9 +6,11 @@ come from the authors. Do not invent these values. Fill
 application script.
 
 Author names, affiliations and the corresponding-author designation are now
-supplied for Boyang Zhang and Tao Jiang. Email addresses, ORCIDs, funding,
-competing interests, CRediT contributions and acknowledgements still require
-confirmation before submission.
+supplied for Boyang Zhang and Tao Jiang. The manuscript now uses the default
+statements "no competing interests", "funding not applicable", "not
+applicable" for acknowledgements, and CRediT contributions based on the
+roles supplied by the authors. Email addresses and ORCIDs remain
+submission-system fields.
 
 ## Required fields
 
@@ -18,10 +20,10 @@ confirmation before submission.
 | Author ORCIDs | title page | required if available |
 | Affiliations and department/city/country | title page | supplied |
 | Corresponding author name and email | title page and cover letter | name/affiliation supplied; email required |
-| Funding agency and grant number(s), or "none" | Declarations | required |
-| Competing interests | Declarations and cover letter | required |
-| Author contributions in CRediT format | Declarations | required |
-| Acknowledgements, or "none" | Declarations | required |
+| Funding agency and grant number(s), or "none" | Declarations | supplied as "Not applicable"; confirm if funding exists |
+| Competing interests | Declarations and cover letter | supplied as "The authors declare that they have no competing interests" |
+| Author contributions in CRediT format | Declarations | supplied from the roles provided by the authors |
+| Acknowledgements, or "none" | Declarations | supplied as "Not applicable" |
 | Repository URL | Availability of data and materials | supplied |
 | Zenodo DOI | Availability of data and materials | supplied |
 | CC BY or CC BY-NC-ND licence choice | submission system | required |

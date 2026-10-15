@@ -557,6 +557,15 @@ def main() -> None:
         "workers.",
     )
 
+    resource_results = find_paragraph(document, "Table 9 reports")
+    set_text(
+        resource_results,
+        resource_results.text
+        + " The benchmark ran on a single host (AMD Ryzen 9 3950X, 16 "
+        "cores/32 threads; 125 GiB RAM; Ubuntu 24.04.1 LTS), with no other "
+        "compute-heavy jobs running during measurement.",
+    )
+
     set_text(
         find_paragraph(document, "Additional file 3."),
         "Additional file 3. File name: Additional_file_3_gc_bin_ablation.xlsx. "
@@ -564,6 +573,28 @@ def main() -> None:
         "full table. Description: curve r and MAD by species, bin setting and "
         "seed, including the first and second independent A. thaliana cohorts "
         "and the pooled 12-seed sensitivity analysis.",
+    )
+
+    set_text(
+        find_paragraph(document, "Competing interests:"),
+        "Competing interests: The authors declare that they have no "
+        "competing interests.",
+    )
+    set_text(
+        find_paragraph(document, "Funding:"),
+        "Funding: Not applicable.",
+    )
+    set_text(
+        find_paragraph(document, "Authors' contributions:"),
+        "Authors' contributions: Boyang Zhang: conceptualization, "
+        "methodology, software, investigation, formal analysis, and writing "
+        "- original draft. Tao Jiang: supervision, project administration, "
+        "and writing - review and editing. Both authors read and approved "
+        "the final manuscript.",
+    )
+    set_text(
+        find_paragraph(document, "Acknowledgements:"),
+        "Acknowledgements: Not applicable.",
     )
 
     remove_paragraphs_starting(
